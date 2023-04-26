@@ -20,7 +20,7 @@ pocetak_vrijeme = time.time()
 s = requests.Session()
 
 response = s.get('https://www.konzum.hr/kreni-u-kupnju', headers=headers)
-web_page = response.content
+web_page = response.text
 soup = BeautifulSoup(web_page, 'html.parser')
 
 for a in soup.find_all('a', {'class': 'category-box__link'}):
@@ -81,7 +81,7 @@ print('Proizvod broj ' + str(counter) + ' u ' + str(time.strftime("%H:%M:%S", t)
 
 for k in kategorija:
     response = s.get(k[0], headers=headers)
-    web_page = response.content
+    web_page = response.text
     only_article_tags=SoupStrainer('article')   #i'm interested only in article tags
     soup = BeautifulSoup(web_page, 'html.parser', parse_only=only_article_tags)
     
