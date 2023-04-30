@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup, SoupStrainer
 import requests
-import xlsxwriter
+#import xlsxwriter
 import time
 
 
@@ -103,10 +103,10 @@ for k in kategorija:
 #ubacujem nazive stupaca, radi prebacivanja u Excel
 data.insert(0, ['poveznica','kategorija','sifra','naziv','cijena_EUR_kom'])
 
-with xlsxwriter.Workbook('Konzum.xlsx') as workbook:
-    worksheet = workbook.add_worksheet()
-    for row_num, data in enumerate(data):
-        worksheet.write_row(row_num, 0, data)
+# with xlsxwriter.Workbook('Konzum.xlsx') as workbook:
+#     worksheet = workbook.add_worksheet()
+#     for row_num, data in enumerate(data):
+#         worksheet.write_row(row_num, 0, data)
 
 kraj_vrijeme = time.time()
 ukupno_vrijeme=kraj_vrijeme-pocetak_vrijeme
