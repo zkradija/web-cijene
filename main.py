@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup, SoupStrainer
 import requests
 import xlsxwriter
 import time
-
+from datetime import date
 
 # sa internet stranice https://Konzum.hr skinuti sve proizvode s pripadajućim cijenama (cca 6.100 proizvoda)
 # cijene ću preuzeti sa stranice kategorija, gdje su navedeni proizvodi pojedine kategorije. ne treba otvarati stranicu pojedinačnog proizvoda
@@ -105,7 +105,10 @@ def main():
     #ubacujem nazive stupaca, radi prebacivanja u Excel
     data.insert(0, ['poveznica','kategorija','sifra','naziv','cijena_EUR_kom'])
 
-    with xlsxwriter.Workbook('Konzum.xlsx') as workbook:
+    t = time.localtime()
+    file_name = 'Konzum_' + str(date.today()) + '.xlsx'
+    
+    with xlsxwriter.Workbook(file_name) as workbook:
         worksheet = workbook.add_worksheet()
         for row_num, data in enumerate(data):
             worksheet.write_row(row_num, 0, data)
