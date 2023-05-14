@@ -4,8 +4,16 @@ import xlsxwriter
 import time
 from datetime import date
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+
 # sa internet stranice https://Konzum.hr skinuti sve proizvode s pripadajućim cijenama
 # cijene ću preuzeti sa stranice kategorija, jer tamo ima i cijena
+
+cred = credentials.Certificate('.\.private_key\webcijene.json')
+app = firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 
 def main():
@@ -116,6 +124,20 @@ def main():
                         + str(time.strftime("%H:%M:%S", t))
                     )
 
+    
+    # prvo ubacujem u bazu
+    for d in data:
+        obj = {
+        'page': 'konzum.hr',
+        'date': str(date.today()),
+        'link': d[0],
+        'category': d[1],
+        'code': d[2],
+        'name': d[3],
+        'price': d[4]
+        }
+        doc_ref = db.collection(u'cijene').add(obj)
+
     # ubacujem nazive stupaca, radi prebacivanja u Excel
     data.insert(0, ["poveznica", "kategorija", "sifra", "naziv", "cijena_EUR_kom"])
 
@@ -126,6 +148,7 @@ def main():
         worksheet = workbook.add_worksheet()
         for row_num, data in enumerate(data):
             worksheet.write_row(row_num, 0, data)
+
 
     kraj_vrijeme = time.time()
     ukupno_vrijeme = kraj_vrijeme - pocetak_vrijeme
