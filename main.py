@@ -6,16 +6,9 @@ from datetime import date
 import pyodbc as odbc
 import sys
 
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
 
 # sa internet stranice https://Konzum.hr skinuti sve proizvode s pripadajućim cijenama
 # cijene ću preuzeti sa stranice kategorija, jer tamo ima i cijena
-
-cred = credentials.Certificate('.\.private_key\webcijene.json')
-app = firebase_admin.initialize_app(cred)
-db = firestore.client()
 
 
 def main():
