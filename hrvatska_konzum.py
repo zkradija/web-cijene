@@ -162,22 +162,7 @@ def main():
         print('Record inserted successfully')
         cursor.commit()
         cursor.close()
-
-
-
-    
-    # prvo ubacujem u bazu
-    for d in data:
-        obj = {
-        'page': 'konzum.hr',
-        'date': str(date.today()),
-        'link': d[0],
-        'category': d[1],
-        'code': d[2],
-        'name': d[3],
-        'price': d[4]
-        }
-        doc_ref = db.collection(u'cijene').add(obj)
+  
 
     # ubacujem nazive stupaca, radi prebacivanja u Excel
     data.insert(0, ['drzava','trgovina','datum','poveznica', 'kategorija', 'sifra', 'naziv', 'cijena'])
