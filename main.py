@@ -3,21 +3,27 @@ import requests
 import xlsxwriter
 import time
 from datetime import date
+import pyodbc as odbc
+import sys
 
 # sa internet stranice https://Konzum.hr skinuti sve proizvode s pripadajućim cijenama
 # cijene ću preuzeti sa stranice kategorija, jer tamo ima i cijena
 
 
 def main():
-    # identificiram se kao Firefox browser
+    # identificiram se kao Chrome browser
     headers = {
-        "User-Agent": "Chrome/112.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
         "Accept-Encoding": "*",
         "Connection": "keep-alive",
     }
 
     data = []
     kategorija = []
+
+    drzava = 'Hrvatska'
+    trgovina = 'Konzum'
+    datum = str(date.today())
 
     pocetak_vrijeme = time.time()
     s = requests.Session()
@@ -90,6 +96,9 @@ def main():
         for article in soup.find_all("article"):
             product = []
             if article is not None:
+                product.append(drzava)
+                product.append(trgovina)
+                product.append(datum)
                 product.append(
                     "https://konzum.hr"
                     + str(article.find("a", {"class": "link-to-product"})["href"])
@@ -115,12 +124,51 @@ def main():
                         + " u "
                         + str(time.strftime("%H:%M:%S", t))
                     )
+    
+    # prvo ubacujem u SQL bazu
+    server = 'ZKradija\MSSQLSERVER22'
+    database = 'WebCijene'
+    username = 'webcijene'
+    password = 'webcijene123!'
+
+    conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+    conn = odbc.connect(conn_str)
+    cursor = conn.cursor()
+
+    try:
+        conn = odbc.connect(conn_str)
+    except Exception as e:
+        print(e)
+        print('Task is terminated')
+        sys.exit
+    else:
+        cursor = conn.cursor()
+
+    insert_statement = '''
+        insert into cijene (drzava,trgovina,datum,poveznica, kategorija, sifra, naziv, cijena) 
+        values (?,?,?,?,?,?,?,?)
+        '''
+
+    try:
+        for d in data:
+            # print(d)
+            cursor.execute(insert_statement, d)
+    except Exception as e:
+        cursor.rollback()
+        print(e.value)
+        print('Transaction rolled back')
+    else:
+        print('Record inserted successfully')
+        cursor.commit()
+        cursor.close()
+
+
 
     # ubacujem nazive stupaca, radi prebacivanja u Excel
-    data.insert(0, ["poveznica", "kategorija", "sifra", "naziv", "cijena_EUR_kom"])
+    data.insert(0, ['drzava','trgovina','datum','poveznica', 'kategorija', 'sifra', 'naziv', 'cijena'])
 
     t = time.localtime()
-    file_name = "Konzum_" + str(date.today()) + ".xlsx"
+    file_name = "Excel\\Hrvatska_Konzum_" + str(date.today()) + ".xlsx"
 
     with xlsxwriter.Workbook(file_name) as workbook:
         worksheet = workbook.add_worksheet()
