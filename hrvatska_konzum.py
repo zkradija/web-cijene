@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup, SoupStrainer
 import requests
-import xlsxwriter
 import time
 from datetime import date
 import pyodbc as odbc
@@ -24,6 +23,7 @@ def main():
 
     drzava = 'Hrvatska'
     trgovina = 'Konzum'
+    web='Konzum'
     datum = str(date.today())
 
     pocetak_vrijeme = time.time()
@@ -114,6 +114,7 @@ def main():
                         .replace(",", ".")
                     )
                 )
+                data.append(web)
                 data.append(product)
                 counter += 1
                 # counter to track the speed
@@ -146,7 +147,7 @@ def main():
         cursor = conn.cursor()
 
     insert_statement = '''
-        insert into cijene (drzava,trgovina,datum,poveznica, kategorija, sifra, naziv, cijena) 
+        insert into cijene (drzava,trgovina,datum,poveznica,kategorija,sifra,naziv,cijena,web) 
         values (?,?,?,?,?,?,?,?)
         '''
 
@@ -162,19 +163,6 @@ def main():
         print('Record inserted successfully')
         cursor.commit()
         cursor.close()
-  
-
-    # ubacujem nazive stupaca, radi prebacivanja u Excel
-    data.insert(0, ['drzava','trgovina','datum','poveznica', 'kategorija', 'sifra', 'naziv', 'cijena'])
-
-    t = time.localtime()
-    file_name = "Excel\\Hrvatska_Konzum_" + str(date.today()) + ".xlsx"
-
-    with xlsxwriter.Workbook(file_name) as workbook:
-        worksheet = workbook.add_worksheet()
-        for row_num, data in enumerate(data):
-            worksheet.write_row(row_num, 0, data)
-
 
     kraj_vrijeme = time.time()
     ukupno_vrijeme = kraj_vrijeme - pocetak_vrijeme
