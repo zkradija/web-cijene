@@ -23,7 +23,7 @@ def main():
 
     drzava = 'Hrvatska'
     trgovina = 'Konzum'
-    web='Konzum'
+    web='www.konzum.hr'
     datum = str(date.today())
 
     pocetak_vrijeme = time.time()
@@ -98,6 +98,7 @@ def main():
             product = []
             if article is not None:
                 product.append(drzava)
+                product.append(web)
                 product.append(trgovina)
                 product.append(datum)
                 product.append(
@@ -114,7 +115,6 @@ def main():
                         .replace(",", ".")
                     )
                 )
-                data.append(web)
                 data.append(product)
                 counter += 1
                 # counter to track the speed
@@ -147,8 +147,8 @@ def main():
         cursor = conn.cursor()
 
     insert_statement = '''
-        insert into cijene (drzava,trgovina,datum,poveznica,kategorija,sifra,naziv,cijena,web) 
-        values (?,?,?,?,?,?,?,?)
+        insert into cijene (drzava,web,trgovina,datum,poveznica,kategorija,sifra,naziv,cijena) 
+        values (?,?,?,?,?,?,?,?,?)
         '''
 
     try:
