@@ -13,9 +13,8 @@ def main():
         "Connection": "keep-alive",
     }
 
-    drzava = 'Slovenija'
-    trgovina = 'Mercator'
-    web = 'trgovina.mercator.si'
+    web_mjesto = 2
+    trgovina = 2
     datum = str(date.today())
     pocetak_vrijeme = time.time()
 
@@ -31,8 +30,7 @@ def main():
         for d in data:
             product = []
             if 'data' in d: 
-                product.append(drzava)
-                product.append(web)
+                product.append(web_mjesto)
                 product.append(trgovina)
                 product.append(datum)
                 product.append('https://trgovina.mercator.si' + d['url'].replace('\\',''))
@@ -54,8 +52,7 @@ def main():
         for d in data:
             product = []
             if 'data' in d: 
-                product.append(drzava)
-                product.append(web)
+                product.append(web_mjesto)
                 product.append(trgovina)
                 product.append(datum)
                 product.append('https://trgovina.mercator.si' + d['url'].replace('\\',''))
@@ -88,8 +85,8 @@ def main():
         cursor = conn.cursor()
 
     insert_statement = '''
-        insert into cijene (drzava,web,trgovina,datum,poveznica,kategorija,sifra,naziv,cijena,gtin_kom) 
-        values (?,?,?,?,?,?,?,?,?,?)
+        insert into cijene (WebMjestoId,TrgovinaId,datum,poveznica,kategorija,sifra,naziv,cijena,GtinKom) 
+        values (?,?,?,?,?,?,?,?,?)
         '''
 
     try:
@@ -101,6 +98,7 @@ def main():
         print(e.value)
         print('Transaction rolled back')
     else:
+        print(len(data))
         print('Record inserted successfully')
         cursor.commit()
         cursor.close()

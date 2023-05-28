@@ -21,9 +21,8 @@ def main():
     data = []
     kategorija = []
 
-    drzava = 'Hrvatska'
-    trgovina = 'Konzum'
-    web='www.konzum.hr'
+    web_mjesto=1
+    trgovina = 1
     datum = str(date.today())
 
     pocetak_vrijeme = time.time()
@@ -97,8 +96,7 @@ def main():
         for article in soup.find_all("article"):
             product = []
             if article is not None:
-                product.append(drzava)
-                product.append(web)
+                product.append(web_mjesto)
                 product.append(trgovina)
                 product.append(datum)
                 product.append(
@@ -147,8 +145,8 @@ def main():
         cursor = conn.cursor()
 
     insert_statement = '''
-        insert into cijene (drzava,web,trgovina,datum,poveznica,kategorija,sifra,naziv,cijena) 
-        values (?,?,?,?,?,?,?,?,?)
+        insert into cijene (WebMjestoId,TrgovinaId,datum,poveznica,kategorija,sifra,naziv,cijena) 
+        values (?,?,?,?,?,?,?,?)
         '''
 
     try:
@@ -160,6 +158,7 @@ def main():
         print(e.value)
         print('Transaction rolled back')
     else:
+        print(len(data))
         print('Record inserted successfully')
         cursor.commit()
         cursor.close()

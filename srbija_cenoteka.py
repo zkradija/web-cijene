@@ -27,8 +27,7 @@ def main():
 
     data = []
 
-    drzava = 'Srbija'
-    web = 'Cenoteka.rs'
+    web_mjesto = 3
     datum = str(date.today())
 
     pocetak_vrijeme = time.time()
@@ -52,96 +51,89 @@ def main():
                     if d.find_all('div')[1].find('a'):
                         #IDEA
                         product = []                
-                        product.append(drzava)
-                        product.append(web)
-                        product.append('IDEA')
+                        product.append(web_mjesto)
+                        product.append(3)
                         product.append(datum)
                         product.append('https://cenoteka.rs' + d.find_all('div')[1].find('a').get('href'))
                         product.append(k[0])
                         product.append(str(d.find_all('div')[1].find('a').get('href')).split('/')[2])
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[0].get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        if product[8] != 0: data.append(product)
+                        if product[7] != 0: data.append(product)
                         
                         #Maxi
                         product = []
-                        product.append(drzava)
-                        product.append(web)
-                        product.append('Maxi')
+                        product.append(web_mjesto)
+                        product.append(4)
                         product.append(datum)
                         product.append('https://cenoteka.rs' + d.find_all('div')[1].find('a').get('href'))
                         product.append(k[0])
                         product.append(str(d.find_all('div')[1].find('a').get('href')).split('/')[2])
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[1].get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        if product[8] != 0: data.append(product)
+                        if product[7] != 0: data.append(product)
 
                         #Univerexport
                         product = []
-                        product.append(drzava)
-                        product.append(web)
-                        product.append('Univerexport')
+                        product.append(web_mjesto)
+                        product.append(5)
                         product.append(datum)
                         product.append('https://cenoteka.rs' + d.find_all('div')[1].find('a').get('href'))
                         product.append(k[0])
                         product.append(str(d.find_all('div')[1].find('a').get('href')).split('/')[2])
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[2].get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        if product[8] != 0: data.append(product)
+                        if product[7] != 0: data.append(product)
 
                         #Tempo
                         product = []
-                        product.append(drzava)
-                        product.append(web)
-                        product.append('Tempo')
+                        product.append(web_mjesto)
+                        product.append(6)
                         product.append(datum)
                         product.append('https://cenoteka.rs' + d.find_all('div')[1].find('a').get('href'))
                         product.append(k[0])
                         product.append(str(d.find_all('div')[1].find('a').get('href')).split('/')[2])
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[3].get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        if product[8] != 0: data.append(product)
+                        if product[7] != 0: data.append(product)
 
                         #DIS Rakovica
                         product = []
-                        product.append(drzava)
-                        product.append(web)
-                        product.append('DIS Rakovica')
+                        product.append(web_mjesto)
+                        product.append(7)
                         product.append(datum)
                         product.append('https://cenoteka.rs' + d.find_all('div')[1].find('a').get('href'))
                         product.append(k[0])
                         product.append(str(d.find_all('div')[1].find('a').get('href')).split('/')[2])
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[4].get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        if product[8] != 0: data.append(product)
+                        if product[7] != 0: data.append(product)
 
                         #Roda
                         product = []
-                        product.append(drzava)
-                        product.append(web)
-                        product.append('Roda')
+                        product.append(web_mjesto)
+                        product.append(8)
                         product.append(datum)
                         product.append('https://cenoteka.rs' + d.find_all('div')[1].find('a').get('href'))
                         product.append(k[0])
                         product.append(str(d.find_all('div')[1].find('a').get('href')).split('/')[2])
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[5].get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        if product[8] != 0: data.append(product)
+                        if product[7] != 0: data.append(product)
 
                         
                         #Lidl - ubacujem provjeru je li postoji zadnji stupac - trgovina Lidl
                         if len(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})) > 6:
                             product = []
-                            product.append(drzava)
-                            product.append(web)
-                            product.append('Lidl')
+                            product.append(web_mjesto)
+                            product.append(9)
                             product.append(datum)
                             product.append('https://cenoteka.rs' + d.find_all('div')[1].find('a').get('href'))
                             product.append(k[0])
                             product.append(str(d.find_all('div')[1].find('a').get('href')).split('/')[2])
                             product.append(d.find_all('div')[1].get_text().strip())
                             product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[6].get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                            if product[8] != 0: data.append(product)
+                            if product[7] != 0: data.append(product)
 
     # prvo ubacujem u SQL bazu
     server = 'ZKradija\MSSQLSERVER22'
@@ -163,8 +155,8 @@ def main():
         cursor = conn.cursor()
 
     insert_statement = '''
-        insert into cijene (drzava,web,trgovina,datum,poveznica,kategorija,sifra,naziv,cijena) 
-        values (?,?,?,?,?,?,?,?,?)
+        insert into cijene (WebMjestoId,TrgovinaId,datum,poveznica,kategorija,sifra,naziv,cijena) 
+        values (?,?,?,?,?,?,?,?)
         '''
 
     try:
@@ -176,6 +168,7 @@ def main():
         print(e.value)
         print('Transaction rolled back')
     else:
+        print(len(data))
         print('Record inserted successfully')
         cursor.commit()
         cursor.close()
