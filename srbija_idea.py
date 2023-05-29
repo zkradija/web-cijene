@@ -61,7 +61,7 @@ def main():
             result.append(product)
         time.sleep(1)
     
-    # prvo ubacujem u SQL bazu
+    # insert u SQL bazu    
     server = 'ZKradija\MSSQLSERVER22'
     database = 'WebCijene'
     username = 'webcijene'
