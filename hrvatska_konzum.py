@@ -38,12 +38,6 @@ def main():
     pocetak_vrijeme = time.time()
     s = requests.Session()
 
-    response = s.get("https://www.konzum.hr/kreni-u-kupnju", headers=headers)
-    web_page = response.text
-    soup = BeautifulSoup(web_page, "html.parser")
-
-    t = time.localtime()
-
     for k in kat:
         response = s.get(k[1], headers=headers)
         web_page = response.text
