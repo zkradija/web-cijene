@@ -62,6 +62,7 @@ def main():
                     float(
                         article.div.attrs["data-ga-price"]
                         .replace(" €", "")
+                        .replace(".", "")
                         .replace(",", ".")
                     )
                 )
