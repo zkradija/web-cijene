@@ -6,7 +6,6 @@ import pyodbc as odbc
 import sys
 
 # sa internet stranice https://Konzum.hr skinuti sve proizvode s pripadajućim cijenama
-# cijene ću preuzeti sa stranice kategorija, jer tamo ima i cijena
 
 kat =   [['Kandit','https://www.konzum.hr/web/t/kategorije/slatkisi-i-grickalice/cokolade'],
         ['Kandit','https://www.konzum.hr/web/t/kategorije/slatkisi-i-grickalice/bombonijere'],
@@ -29,7 +28,7 @@ def main():
         "Connection": "keep-alive",
     }
 
-    data = []
+    result = []
 
     web_mjesto=1
     trgovina = 1
@@ -66,7 +65,7 @@ def main():
                         .replace(",", ".")
                     )
                 )
-                data.append(product)
+                result.append(product)
     
     # prvo ubacujem u SQL bazu
     server = 'ZKradija\MSSQLSERVER22'
@@ -93,7 +92,7 @@ def main():
         '''
 
     try:
-        for d in data:
+        for d in result:
             # print(d)
             cursor.execute(insert_statement, d)
     except Exception as e:
@@ -101,8 +100,7 @@ def main():
         print(e.value)
         print('Transaction rolled back')
     else:
-        print(len(data))
-        print('Record inserted successfully')
+        print(f'{len(result)} records inserted successfully')
         cursor.commit()
         cursor.close()
 

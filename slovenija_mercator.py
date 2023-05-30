@@ -97,8 +97,7 @@ def main():
         print(e.value)
         print('Transaction rolled back')
     else:
-        print(len(result))
-        print('Record inserted successfully')
+        print(f'{len(result)} records inserted successfully')
         cursor.commit()
         cursor.close()
   
