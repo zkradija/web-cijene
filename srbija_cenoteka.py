@@ -5,10 +5,7 @@ import time
 from datetime import date
 import pyodbc as odbc
 import sys
-
-
-# sa internet stranice https://Konzum.hr skinuti sve proizvode s pripadajućim cijenama
-# cijene ću preuzeti sa stranice kategorija, jer tamo ima i cijena
+import config
 
 
 kat =   [['Kandit','https://cenoteka.rs/proizvodi/slatkisi-i-grickalice/cokolade'],
@@ -135,11 +132,11 @@ def main():
                             product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[6].get_text().strip().replace('-','0').replace('.','').replace(',','.')))
                             if product[7] != 0: result.append(product)
 
-    # prvo ubacujem u SQL bazu
-    server = 'ZKradija\MSSQLSERVER22'
-    database = 'WebCijene'
-    username = 'webcijene'
-    password = 'webcijene123!'
+    # insert u SQL bazu    
+    server = config.server
+    database = config.database
+    username = config.username
+    password = config.password
 
     conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
     conn = odbc.connect(conn_str)

@@ -4,8 +4,8 @@ import time
 from datetime import date
 import pyodbc as odbc
 import sys
+import config
 
-# sa internet stranice https://Konzum.hr skinuti sve proizvode s pripadajućim cijenama
 
 kat =   [['Kandit','https://www.konzum.hr/web/t/kategorije/slatkisi-i-grickalice/cokolade'],
         ['Kandit','https://www.konzum.hr/web/t/kategorije/slatkisi-i-grickalice/bombonijere'],
@@ -68,11 +68,11 @@ def main():
                 )
                 result.append(product)
     
-    # prvo ubacujem u SQL bazu
-    server = 'ZKradija\MSSQLSERVER22'
-    database = 'WebCijene'
-    username = 'webcijene'
-    password = 'webcijene123!'
+    # insert u SQL bazu    
+    server = config.server
+    database = config.database
+    username = config.username
+    password = config.password
 
     conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
     conn = odbc.connect(conn_str)

@@ -2,8 +2,7 @@ import requests
 import time
 from datetime import date
 import pyodbc as odbc
-
-# internet stranica https://trgovina.mercator.si
+import config
 
 
 def main():
@@ -66,11 +65,11 @@ def main():
 
 
 
-    # prvo ubacujem u SQL bazu
-    server = 'ZKradija\MSSQLSERVER22'
-    database = 'WebCijene'
-    username = 'webcijene'
-    password = 'webcijene123!'
+    # insert u SQL bazu    
+    server = config.server
+    database = config.database
+    username = config.username
+    password = config.password
 
     conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
     conn = odbc.connect(conn_str)

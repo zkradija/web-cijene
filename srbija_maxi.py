@@ -4,6 +4,7 @@ import time
 from datetime import date
 import pyodbc as odbc
 import sys
+import config
 
 
 kat =   [['Kandit','Čokoladni proizvodi','0701'],
@@ -11,8 +12,6 @@ kat =   [['Kandit','Čokoladni proizvodi','0701'],
         ['Saponia', 'Ručno pranje sudova', '130101'],
         ['Saponia', 'Deterdženti za veš i omekšivači', '1303'],
         ['Saponia', 'Paste za zube', '140101']]
-
-
 
 def main():
     pocetak_vrijeme = time.time()
@@ -48,10 +47,10 @@ def main():
             time.sleep(1)
     
     # insert u SQL bazu    
-    server = 'ZKradija\MSSQLSERVER22'
-    database = 'WebCijene'
-    username = 'webcijene'
-    password = 'webcijene123!'
+    server = config.server
+    database = config.database
+    username = config.username
+    password = config.password
 
     conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
     conn = odbc.connect(conn_str)

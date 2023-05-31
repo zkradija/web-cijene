@@ -4,6 +4,7 @@ import time
 from datetime import date
 import pyodbc as odbc
 import sys
+import config
 
 
 trgovina_dict = {
@@ -70,10 +71,10 @@ def main():
         time.sleep(1)
 
     # insert u SQL bazu    
-    server = 'ZKradija\MSSQLSERVER22'
-    database = 'WebCijene'
-    username = 'webcijene'
-    password = 'webcijene123!'
+    server = config.server
+    database = config.database
+    username = config.username
+    password = config.password
 
     conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
     conn = odbc.connect(conn_str)
