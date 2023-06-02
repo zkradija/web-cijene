@@ -11,43 +11,42 @@ import config
 
 kat =   [['Kandit','https://hitrinakup.com/kategorije/Sladko%20in%20slano/Sladki%20prigrizki','Čokolade',0],
          ['Kandit','https://hitrinakup.com/kategorije/Sladko%20in%20slano/Sladki%20prigrizki','Bonboni',0],
-         ['Kandit','https://hitrinakup.com/kategorije/Sladko%20in%20slano/Sladki%20prigrizki','Bonboniere',0],
+         ['Kandit','https://hitrinakup.com/kategorije/Sladko%20in%20slano/Sladki%20prigrizki','Bonboniere',1],
          ['Kandit','https://hitrinakup.com/kategorije/Sladko%20in%20slano/Sladki%20prigrizki','Čokoladne rezine',1],
          ['Kandit','https://hitrinakup.com/kategorije/Sladko%20in%20slano/Sladki%20prigrizki','Čokoladne banane',1],
          ['Saponia','https://hitrinakup.com/kategorije/Osebna%20nega/Nega%20ust%20in%20zob','Zobne paste',0],
          ['Saponia','https://hitrinakup.com/kategorije/Osebna%20nega/Nega%20ust%20in%20zob','Zobne paste za otroke',0],
          ['Saponia','https://hitrinakup.com/kategorije/Dom/Pranje%20perila?categoryName=Dom','Mehčalci',0],
          ['Saponia','https://hitrinakup.com/kategorije/Dom/Pranje%20perila?categoryName=Dom','Tekoči pralni praški',0],
-         ['Saponia','https://hitrinakup.com/kategorije/Dom/Pranje%20perila?categoryName=Dom','Pralni praški v kapsulah',0],
+         ['Saponia','https://hitrinakup.com/kategorije/Dom/Pranje%20perila?categoryName=Dom','Pralni praški v kapsulah',1],
          ['Saponia','https://hitrinakup.com/kategorije/Dom/Pranje%20perila?categoryName=Dom','Trdi pralni praški',1],
          ['Saponia','https://hitrinakup.com/kategorije/Dom/Detergetni%20za%20pomivanje%20posode?categoryName=Dom','Strojno pomivanje posode',0],
          ['Saponia','https://hitrinakup.com/kategorije/Dom/Detergetni%20za%20pomivanje%20posode?categoryName=Dom','Ročno pomivanje posode',0],
          ['Saponia','https://hitrinakup.com/kategorije/Dom/%C4%8Cistila?categoryName=Dom','Druga čistila',0],
          ['Saponia','https://hitrinakup.com/kategorije/Dom/%C4%8Cistila?categoryName=Dom','Čistila za kuhinjo',0],
-         ['Saponia','https://hitrinakup.com/kategorije/Dom/%C4%8Cistila?categoryName=Dom','Univerzalna čistila',0],
+         ['Saponia','https://hitrinakup.com/kategorije/Dom/%C4%8Cistila?categoryName=Dom','Univerzalna čistila',1],
          ['Saponia','https://hitrinakup.com/kategorije/Dom/%C4%8Cistila?categoryName=Dom','Čistila za steklo',1]]
 
 
 def main():
     result = []
-
+    time_sleep = 3
     web_mjesto=9
     trgovina = 19
     datum = str(date.today())
     pocetak_vrijeme = time.time()
 
-    driver = webdriver.Chrome(executable_path = r'./chromedriver')
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(executable_path = r'./chromedriver', options=options)
+
 
     def scroll():
-        # for x in range(1,20):
-        #     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        #     print('Scrolling: ', x)  
-        #     time.sleep(1)
         last_height = driver.execute_script("return document.body.scrollHeight")
 
         while True:
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
+            time.sleep(time_sleep)
             new_height = driver.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
                 break
@@ -57,14 +56,14 @@ def main():
         driver.get(url)
         # driver.maximize_window()
         driver.set_window_size(1920, 1080)
-        time.sleep(1)
+        time.sleep(time_sleep)
         if k[3] == 1 :
             subFilter_checkbox = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, 'show-more-sub')))
             subFilter_checkbox.click()
             time.sleep(1)
         filter_checkbox = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, subcategory)))
         filter_checkbox.click()
-        time.sleep(1)
+        time.sleep(time_sleep)
         scroll()
         
         content = driver.page_source.encode('utf-8').strip()
