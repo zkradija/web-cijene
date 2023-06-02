@@ -53,8 +53,7 @@ def main():
                 float(
                     div.find('span', {'class': 'woocommerce-Price-amount amount'}).get_text()
                     .replace('\xa0ден','')
-                    .replace('.', '')
-                    .replace(',', '.')
+                    .replace(',', '')
                 )
             )
             result.append(product)
