@@ -4,7 +4,7 @@ import time
 from datetime import date
 import pyodbc as odbc
 import sys
-import config
+import config_test
 
 kat =   [['Kandit','https://voli.me/kategorije/52'],
         ['Kandit','https://voli.me/kategorije/53'],
@@ -33,14 +33,14 @@ def main():
         "Connection": "keep-alive",
     }
 
-    pocetak_vrijeme = time.time()
+    start_time = time.time()
     s = requests.Session()
 
     result = []
-    web_mjesto=10
+    web_site=10
     trgovina=20
-    datum = str(date.today())
-    pocetak_vrijeme = time.time()
+    date_str = str(date.today())
+    start_time = time.time()
 
     product_dict = {}
     for k in kat:
@@ -53,9 +53,9 @@ def main():
             if str(div.find('div', {'class': 'card-text'}).find('a')['href']).split('/')[-1] in product_dict:
                 break
             product = []
-            product.append(web_mjesto)
+            product.append(web_site)
             product.append(trgovina)
-            product.append(datum)
+            product.append(date_str)
             product.append(str(div.find('div', {'class': 'card-text'}).find('a')['href']))
             product.append(k[0])
             product.append(str(div.find('div', {'class': 'card-text'}).find('a')['href']).split('/')[-1])
@@ -70,10 +70,10 @@ def main():
         time.sleep(1)
 
     # insert u SQL bazu    
-    server = config.server
-    database = config.database
-    username = config.username
-    password = config.password
+    server = config_test.server
+    database = config_test.database
+    username = config_test.username
+    password = config_test.password
 
     conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
     conn = odbc.connect(conn_str)
@@ -89,7 +89,7 @@ def main():
         cursor = conn.cursor()
 
     insert_statement = '''
-        insert into cijene (WebMjestoId,TrgovinaId,datum,poveznica,kategorija,sifra,naziv,cijena) 
+        insert into cijene (WebMjestoId,TrgovinaId,date_str,poveznica,kategorija,sifra,naziv,cijena) 
         values (?,?,?,?,?,?,?,?)
         '''
 
@@ -105,9 +105,9 @@ def main():
         cursor.commit()
         cursor.close()
 
-    kraj_vrijeme = time.time()
-    ukupno_vrijeme = kraj_vrijeme - pocetak_vrijeme
-    print(ukupno_vrijeme)
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(elapsed_time)
 
 
 if __name__ == "__main__":

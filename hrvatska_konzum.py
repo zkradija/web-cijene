@@ -1,10 +1,10 @@
 import time
 from datetime import date
 
-import requests
 from bs4 import BeautifulSoup, SoupStrainer
 
-import insert_sql
+from headers import headers
+from insert_sql import insert_sql
 
 kat =   [['Kandit','https://www.konzum.hr/web/t/kategorije/slatkisi-i-grickalice/cokolade'],
         ['Kandit','https://www.konzum.hr/web/t/kategorije/slatkisi-i-grickalice/bombonijere'],
@@ -20,25 +20,19 @@ kat =   [['Kandit','https://www.konzum.hr/web/t/kategorije/slatkisi-i-grickalice
         ['Saponia','https://www.konzum.hr/web/t/kategorije/njega-i-higijena/njega-zubi/paste']]
 
 def main():
-    # identificiram se kao Chrome browser
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' \
-            '(KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
-        'Accept-Encoding': '*',
-        'Connection': 'keep-alive',
-    }
 
     result = []
+    indProxy = 0
+    web_site=1
+    store = 1
+    date_str = str(date.today())
 
-    web_mjesto=1
-    trgovina = 1
-    datum = str(date.today())
-    pocetak_vrijeme = time.time()
-    s = requests.Session()
+    # there is no gtin_kom so im using dummy data
+    gtin_kom = ''
+    start_time = time.time()
 
     for k in kat:
-        response = s.get(k[1], headers=headers)
-        web_page = response.text
+        web_page = headers(k[1], indProxy)
         only_article_tags = SoupStrainer(
             'article'
         )  # i'm interested only in article tags
@@ -47,9 +41,9 @@ def main():
         for article in soup.find_all('article'):
             product = []
             if article is not None:
-                product.append(web_mjesto)
-                product.append(trgovina)
-                product.append(datum)
+                product.append(web_site)
+                product.append(store)
+                product.append(date_str)
                 product.append(
                     'https://konzum.hr'
                     + str(article.find('a', {'class': 'link-to-product'})['href'])
@@ -65,15 +59,16 @@ def main():
                         .replace(',', '.')
                     )
                 )
+                product.append(gtin_kom)
                 result.append(product)
+                print(product)
 
-
+    # inserting data
     insert_sql(result)
 
-    kraj_vrijeme = time.time()
-    ukupno_vrijeme = kraj_vrijeme - pocetak_vrijeme
-    print(ukupno_vrijeme)
-
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f'Elapsed time: {int(elapsed_time)} seconds')
 
 if __name__ == '__main__':
     main()

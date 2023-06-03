@@ -1,14 +1,15 @@
 import sys
 import pyodbc as odbc
-import config
+import config_test
 
-def insert_SQL(result):
-    server = config.server
-    database = config.database
-    username = config.username
-    password = config.password
+def insert_sql(result):
+    server = config_test.server
+    database = config_test.database
+    username = config_test.username
+    password = config_test.password
 
-    conn_str =  f'SERVER={server};' \
+    conn_str =  f'DRIVER={{ODBC Driver 17 for SQL Server}};' \
+                f'SERVER={server};' \
                 f'DATABASE={database};' \
                 f'UID={username};' \
                 f'PWD={{{password}}};'
@@ -25,9 +26,9 @@ def insert_SQL(result):
         cursor = conn.cursor()
 
     insert_statement = '''
-        insert into cijene 
-        (WebMjestoId,TrgovinaId,datum,poveznica,kategorija,sifra,naziv,cijena) 
-        values (?,?,?,?,?,?,?,?)
+        insert into Cijene 
+        (WebMjestoId,TrgovinaId,datum,Poveznica,Kategorija,Sifra,Naziv,Cijena,GtinKom) 
+        values (?,?,?,?,?,?,?,?,?)
         '''
 
     try:
@@ -41,6 +42,3 @@ def insert_SQL(result):
         print(f'{len(result)} records inserted successfully')
         cursor.commit()
         cursor.close()
-
-if __name__ == '__main__':
-    insert_SQL()

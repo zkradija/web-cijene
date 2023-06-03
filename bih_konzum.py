@@ -2,7 +2,7 @@ import requests
 import time
 from datetime import date
 import pyodbc as odbc
-import config
+import config_test
 
 kat = [ ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471252&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723560399'],
         ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471257&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723765060'],
@@ -21,11 +21,11 @@ def main():
 
     result = []
 
-    web_mjesto=11
+    web_site=11
     trgovina = 21
-    datum = str(date.today())
+    date_str = str(date.today())
 
-    pocetak_vrijeme = time.time()
+    start_time = time.time()
     
     s = requests.Session()
 
@@ -35,9 +35,9 @@ def main():
 
         for d in data['products']:
             product = []
-            product.append(web_mjesto)
+            product.append(web_site)
             product.append(trgovina)
-            product.append(datum)
+            product.append(date_str)
             product.append('https://www.konzumshop.ba' + d['product_path'])
             product.append(k[0])
             product.append(d['code'])
@@ -49,10 +49,10 @@ def main():
         time.sleep(1)
 
     # insert u SQL bazu    
-    server = config.server
-    database = config.database
-    username = config.username
-    password = config.password
+    server = config_test.server
+    database = config_test.database
+    username = config_test.username
+    password = config_test.password
 
     conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
     conn = odbc.connect(conn_str)
@@ -67,7 +67,7 @@ def main():
         cursor = conn.cursor()
 
     insert_statement = '''
-        insert into cijene (WebMjestoId,TrgovinaId,datum,poveznica,kategorija,sifra,naziv,cijena,GtinKom) 
+        insert into cijene (WebMjestoId,TrgovinaId,date_str,poveznica,kategorija,sifra,naziv,cijena,GtinKom) 
         values (?,?,?,?,?,?,?,?,?)
         '''
 
@@ -84,9 +84,9 @@ def main():
         cursor.close()
   
 
-    kraj_vrijeme = time.time()
-    ukupno_vrijeme = kraj_vrijeme - pocetak_vrijeme
-    print(ukupno_vrijeme)
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(elapsed_time)
 
 
 if __name__ == "__main__":

@@ -1,11 +1,11 @@
-from bs4 import BeautifulSoup
-import requests
 import time
 from datetime import date
-import pyodbc as odbc
-import sys
-import config
+
 import cyrtranslit
+from bs4 import BeautifulSoup
+
+from headers import headers
+from insert_sql import insert_sql
 
 kat =   [ 
         ['Kandit', 'https://marketonline.mk/product-category/%D1%85%D1%80%D0%B0%D0%BD%D0%B0/%D1%87%D0%BE%D0%BA%D0%BE%D0%BB%D0%B0%D0%B4%D0%B8-%D0%B4%D0%B5%D1%81%D0%B5%D1%80%D1%82%D0%B8-%D0%B8-%D0%B3%D1%80%D0%B8%D1%86%D0%BA%D0%B8/%D1%87%D0%BE%D0%BA%D0%BE%D0%BB%D0%B0%D0%B4%D0%B8-%D0%BA%D0%B0%D0%BA%D0%B0%D0%BE/?per_page=500'],
@@ -14,93 +14,55 @@ kat =   [
         ]
 
 def main():
-    # identificiram se kao Chrome browser
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
-        "Accept-Encoding": "*",
-        "Connection": "keep-alive",
-    }
-
     result = []
+    indProxy = 0
+    web_site=12
+    store = 22
+    date_str = str(date.today())
 
-    web_mjesto=12
-    trgovina = 22
-    datum = str(date.today())
-
-    pocetak_vrijeme = time.time()
-    s = requests.Session()
+    # there is no gtin_kom so im using dummy data
+    gtin_kom = ''    
+    start_time = time.time()
 
     def starts_with_my_class(class_name):
-        return class_name and class_name.startswith('product-grid-item product wd-hover-standard')
+        return class_name and class_name.startswith(
+            'product-grid-item product wd-hover-standard'
+            )
     
     for k in kat:
-        response = s.get(k[1], headers=headers)
-        web_page = response.text
-
+        web_page = headers(k[1], indProxy)
         soup = BeautifulSoup(web_page, 'html.parser')
-
         for div in soup.find_all('div', class_=starts_with_my_class):
             product = []
-            product.append(web_mjesto)
-            product.append(trgovina)
-            product.append(datum)
+            product.append(web_site)
+            product.append(store)
+            product.append(date_str)
             product.append(div.find('a')['href'])
             product.append(k[0])
             product.append(div.attrs['data-id'])
-            latin_name = cyrtranslit.to_latin(div.find('h3', {'class': 'wd-entities-title'}).get_text(), 'mk')
+            latin_name = cyrtranslit.to_latin(
+                div.find('h3', {'class': 'wd-entities-title'}).get_text(), 'mk'
+                )
             product.append(latin_name)
             product.append(
                 float(
-                    div.find('span', {'class': 'woocommerce-Price-amount amount'}).get_text()
+                    div.find('span', {'class': 'woocommerce-Price-amount amount'})
+                    .get_text()
                     .replace('\xa0ден','')
                     .replace(',', '')
                 )
             )
+            product.append(gtin_kom)
             result.append(product)
             print(product)
         time.sleep(1)
 
-    # insert u SQL bazu    
-    server = config.server
-    database = config.database
-    username = config.username
-    password = config.password
+    # inserting data
+    insert_sql(result)
 
-    conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
-    conn = odbc.connect(conn_str)
-    cursor = conn.cursor()
-
-    try:
-        conn = odbc.connect(conn_str)
-    except Exception as e:
-        print(e)
-        print('Task is terminated')
-        sys.exit
-    else:
-        cursor = conn.cursor()
-
-    insert_statement = '''
-        insert into cijene (WebMjestoId,TrgovinaId,datum,poveznica,kategorija,sifra,naziv,cijena) 
-        values (?,?,?,?,?,?,?,?)
-        '''
-
-    try:
-        for r in result:
-            # print(d)
-            cursor.execute(insert_statement, r)
-    except Exception as e:
-        cursor.rollback()
-        print(e.value)
-        print('Transaction rolled back')
-    else:
-        print(f'{len(result)} records inserted successfully')
-        cursor.commit()
-        cursor.close()
-
-    kraj_vrijeme = time.time()
-    ukupno_vrijeme = kraj_vrijeme - pocetak_vrijeme
-    print(ukupno_vrijeme)
-
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f'Elapsed time: {int(elapsed_time)} seconds')
 
 if __name__ == "__main__":
     main()

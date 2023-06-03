@@ -1,13 +1,12 @@
-from bs4 import BeautifulSoup
-import requests
 import time
 from datetime import date
-import pyodbc as odbc
-import sys
-import config
 
+from bs4 import BeautifulSoup
 
-trgovina_dict = {
+from headers import headers
+from insert_sql import insert_sql
+
+store_dict = {
     'Boso': 10,
     'Interspar': 11,
     'Kaufland': 12,
@@ -17,7 +16,7 @@ trgovina_dict = {
     'SPAR': 16,
     'Studenac': 17}
 
-trgovina_list = list(trgovina_dict.keys())
+store_list = list(store_dict.keys())
 
 kat =   [['Kandit','slatkisi-grickalice'],
         ['Saponia','paste-za-zube'],
@@ -27,88 +26,53 @@ kat =   [['Kandit','slatkisi-grickalice'],
         ['Saponia','sredstva-za-ciscenje']]
 
 
-
 def main():
-    # identificiram se kao Chrome browser
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
-        "Accept-Encoding": "*",
-        "Connection": "keep-alive",
-    }
-
     result = []
-    web_mjesto = 7
+    indProxy = 0    # not using Proxies cuz of 2 much links
+    web_site = 7
+    date_str = str(date.today())
 
-    datum = str(date.today())
-    pocetak_vrijeme = time.time()
-    s = requests.Session()
+    # there is no gtin_kom so im using dummy data
+    gtin_kom = ''
+    start_time = time.time()
 
-    for t in trgovina_list:
+    for t in store_list:
         for k in kat:
-            print(f'{t} / {k[1]}')
-            # nema više od 2 stranice , po trgovini / kategoriji, a kamoli 10
+            # 10 pages / store is more than enough
             for x in range(1,11):   
                 url=f'https://popusti.njuskalo.hr/trgovina/{t}/{k[1]}?page={x}&ajax=1&xitiIndex=16'
-                response = s.get(url, headers=headers)
-                web_page = response.text
+                web_page = headers(url, indProxy)
                 soup = BeautifulSoup(web_page, 'html.parser')
-                # ne znam koliko ima stranica pa moram provjeravati je li postoje traženi elementi
+                # don't know exact page numbers, so i'm checking if element exist
                 if soup.find('div',{'class': 'productItemType1 cf offer'}):
-                    for div in soup.find_all('div',{'class': 'productItemType1 cf offer'}):
-                        # ne zanimaju me postotna sniženja pa radim filter za cijene
+                    for div in soup.find_all(
+                        'div',{'class': 'productItemType1 cf offer'}):
+                        # don't need %, just usual numeric price
                         if div.find('p',{'class': 'newPrice'}):
                             product = []
-                            product.append(web_mjesto)
-                            product.append(trgovina_dict[t])
-                            product.append(datum)
-                            product.append('https://popusti.njuskalo.hr/' + div.find('a')['href'])
+                            product.append(web_site)
+                            product.append(store_dict[t])
+                            product.append(date_str)
+                            product.append('https://popusti.njuskalo.hr' 
+                                + div.find('a')['href'])
                             product.append(k[0])
                             product.append(str(div.find('a')['href'].split('-')[-1]))
-                            product.append(div.find('div',{'class': 'infoCont'}).find('a').get_text().strip())
-                            product.append(float(div.find('p',{'class': 'newPrice'}).get_text().strip().split(' ')[0].replace(".","").replace(",",".")))
+                            product.append(div.find('div',{'class': 'infoCont'})
+                                .find('a').get_text().strip())
+                            product.append(float(div.find('p',{'class': 'newPrice'})
+                                .get_text().strip().split(' ')[0]
+                                .replace(".","").replace(",",".")))
+                            product.append(gtin_kom)
                             result.append(product)
-                            print(str(x) + ' ' + str(product))
+                            print(product)
         time.sleep(1)
 
-    # insert u SQL bazu    
-    server = config.server
-    database = config.database
-    username = config.username
-    password = config.password
+    # inserting data
+    insert_sql(result)
 
-    conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
-    conn = odbc.connect(conn_str)
-    cursor = conn.cursor()
-
-    try:
-        conn = odbc.connect(conn_str)
-    except Exception as e:
-        print(e)
-        print('Task is terminated')
-        sys.exit
-    else:
-        cursor = conn.cursor()
-
-    insert_statement = '''
-        insert into cijene (WebMjestoId,TrgovinaId,datum,poveznica,kategorija,sifra,naziv,cijena) 
-        values (?,?,?,?,?,?,?,?)
-        '''
-    
-    try:
-        for r in result:
-            cursor.execute(insert_statement, r)
-    except Exception as e:
-        cursor.rollback()
-        print(e.value)
-        print('Transaction rolled back')
-    else:
-        print(f'{len(result)} records inserted successfully')
-        cursor.commit()
-        cursor.close()
-
-    kraj_vrijeme = time.time()
-    ukupno_vrijeme = kraj_vrijeme - pocetak_vrijeme
-    print(ukupno_vrijeme)
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f'Elapsed time: {int(elapsed_time)} seconds')
 
 if __name__ == "__main__":
     main()

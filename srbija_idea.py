@@ -1,10 +1,8 @@
-from bs4 import BeautifulSoup, SoupStrainer
-import requests
 import time
 from datetime import date
-import pyodbc as odbc
-import sys
-import config
+
+import requests
+from insert_sql import insert_sql
 
 
 kat =   [['Kandit','https://online.idea.rs/#!/categories/60014036/mlecna-cokolada','60014036'],
@@ -33,25 +31,23 @@ def main():
         "Connection": "keep-alive",
     }
 
-    web_mjesto=4
-    trgovina = 3
-    datum = str(date.today())
-
-    pocetak_vrijeme = time.time()
-    s = requests.Session()
-
     result=[]
+    web_site=4
+    store = 3
+    date_str = str(date.today())
 
+    start_time = time.time()
+    s = requests.Session()
     for k in kat:
         url = "https://online.idea.rs/v2/categories/" + str(k[2]) + "/products"
         querystring = {"per_page":"1000","page":"1","filter^%^5Bsort^%^5D":"soldStatisticsDesc"}
-        r = requests.request('GET', url, params=querystring)
+        r = s.request('GET', url, headers=headers, params=querystring)
         data = r.json()
         for d in data['products']:
             product = []
-            product.append(web_mjesto)
-            product.append(trgovina)
-            product.append(datum)
+            product.append(web_site)
+            product.append(store)
+            product.append(date_str)
             product.append('https://online.idea.rs/#!' + d['product_path'])
             product.append(k[0])
             product.append(d['id'])
@@ -59,48 +55,15 @@ def main():
             product.append(float(float(d['price']['amount']/100)))
             product.append(d['barcodes'][0][:13])
             result.append(product)
+            print(product)
         time.sleep(1)
     
-    # insert u SQL bazu    
-    server = config.server
-    database = config.database
-    username = config.username
-    password = config.password
+    # inserting data
+    insert_sql(result)
 
-    conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
-    conn = odbc.connect(conn_str)
-    cursor = conn.cursor()
-
-    try:
-        conn = odbc.connect(conn_str)
-    except Exception as e:
-        print(e)
-        print('Task is terminated')
-        sys.exit
-    else:
-        cursor = conn.cursor()
-
-    insert_statement = '''
-        insert into cijene (WebMjestoId,TrgovinaId,datum,poveznica,kategorija,sifra,naziv,cijena,GtinKom) 
-        values (?,?,?,?,?,?,?,?,?)
-        '''
-    
-    try:
-        for r in result:
-            cursor.execute(insert_statement, r)
-    except Exception as e:
-        cursor.rollback()
-        print(e.value)
-        print('Transaction rolled back')
-    else:
-        print(f'{len(result)} records inserted successfully')
-        cursor.commit()
-        cursor.close()
-
-    kraj_vrijeme = time.time()
-    ukupno_vrijeme = kraj_vrijeme - pocetak_vrijeme
-    print(ukupno_vrijeme)
-
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f'Elapsed time: {int(elapsed_time)} seconds')
 
 if __name__ == "__main__":
     main()
