@@ -24,6 +24,7 @@ def main():
     barcode = ''   
     start_time = time.time()
     for k in kat:
+        print(k)
         web_page = headers(k[1], indProxy)
         soup = BeautifulSoup(web_page, "html.parser")
 
@@ -37,8 +38,8 @@ def main():
 
             for d in soup.find('div', {'id' : 'products'}).find_all('div'):
                 if d.has_attr('data-product-id'):
-                    #PL ccan be ovi znaju biti i pojedinačno i skupno prikazani. 
-                    # Ako nema poveznice, ne zanimaju me (pojedinačno prikazani)
+                    # PL can be in multiple rows
+                    # Scraping through rows
                     if d.find_all('div')[1].find('a'):
                         #IDEA
                         product = []                
@@ -55,7 +56,7 @@ def main():
                         product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
-                        print(product)
+                        
                         
                         #Maxi
                         product = []
@@ -72,7 +73,7 @@ def main():
                         product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
-                        print(product)
+                        
 
 
                         #Univerexport
@@ -90,7 +91,7 @@ def main():
                         product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
-                        print(product)
+                        
 
 
                         #Tempo
@@ -108,7 +109,7 @@ def main():
                         product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
-                        print(product)
+                        
 
 
                         #DIS Rakovica
@@ -126,7 +127,7 @@ def main():
                         product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
-                        print(product)
+                        
 
 
                         #Roda
@@ -144,7 +145,7 @@ def main():
                         product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
-                        print(product)
+                        
 
 
                         
@@ -164,7 +165,7 @@ def main():
                             product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
-                        print(product)
+                        
 
 
     # inserting data

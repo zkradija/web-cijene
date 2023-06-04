@@ -33,6 +33,7 @@ def main():
     start_time = time.time()
 
     for k in kat:
+        print(k)
         web_page = headers(k[1], indProxy)
         only_article_tags = SoupStrainer(
             'article'
@@ -62,7 +63,7 @@ def main():
                 )
                 product.append(barcode)
                 result.append(product)
-                print(product)
+                
 
     # inserting data
     insert_sql(result)

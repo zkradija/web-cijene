@@ -39,6 +39,7 @@ def main():
 
     for t in store_list:
         for k in kat:
+            print(k)
             # 10 pages / store is more than enough
             for x in range(1,11):   
                 url=f'https://popusti.njuskalo.hr/trgovina/{t}/{k[1]}?page={x}&ajax=1&xitiIndex=16'
@@ -65,7 +66,7 @@ def main():
                                 .replace(".","").replace(",",".")))
                             product.append(barcode)
                             result.append(product)
-                            print(product)
+                            
         time.sleep(1)
 
     # inserting data

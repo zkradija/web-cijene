@@ -31,6 +31,7 @@ def main():
             )
     
     for k in kat:
+        print(k)
         web_page = headers(k[1], indProxy)
         soup = BeautifulSoup(web_page, 'html.parser')
         for div in soup.find_all('div', class_=starts_with_my_class):
@@ -55,7 +56,7 @@ def main():
             )
             product.append(barcode)
             result.append(product)
-            print(product)
+            
         time.sleep(1)
 
     # inserting data

@@ -21,7 +21,7 @@ def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0
-    web_site=6
+    web_site = 6
     trgovina = 5
     date_str = str(date.today())
 
@@ -30,6 +30,7 @@ def main():
     start_time = time.time()
 
     for k in kat:
+        print(k)
         web_page = headers(k[1], indProxy)
         soup = BeautifulSoup(web_page, 'html.parser')
 
@@ -50,7 +51,7 @@ def main():
                                  .get_text().replace('din/kom','')))
             product.append(barcode)
             result.append(product)
-            print(product)
+            
         time.sleep(1)
     
     # inserting data

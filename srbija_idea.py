@@ -25,7 +25,8 @@ kat =   [['Kandit','https://online.idea.rs/#!/categories/60014036/mlecna-cokolad
 
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-    # identificiram se kao Chrome browser
+    
+    # Chrome browser
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
         "Accept-Encoding": "*",
@@ -40,6 +41,7 @@ def main():
     start_time = time.time()
     s = requests.Session()
     for k in kat:
+        print(k)
         url = "https://online.idea.rs/v2/categories/" + str(k[2]) + "/products"
         querystring = {"per_page":"1000","page":"1","filter^%^5Bsort^%^5D":"soldStatisticsDesc"}
         r = s.request('GET', url, headers=headers, params=querystring)
@@ -56,7 +58,7 @@ def main():
             product.append(float(float(d['price']['amount']/100)))
             product.append(d['barcodes'][0][:13])
             result.append(product)
-            print(product)
+            
         time.sleep(1)
     
     # inserting data

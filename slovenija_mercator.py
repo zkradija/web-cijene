@@ -18,6 +18,7 @@ def main():
     for x in range (0,10):
         y = x * 100
         url = f'https://trgovina.mercator.si/market/products/browseProducts/getProducts?limit=100&offset={x}&filterData%5Bcategories%5D=14535711&filterData%5Boffset%5D=8&from={y}&_=1684918912105'
+        print(url)
         r = headers(url, indProxy)
         data = json.loads(r)
         for d in data:
@@ -34,13 +35,14 @@ def main():
                 product.append(d['data']['current_price'])
                 product.append(d['data']['gtins'][0]['gtin'])
                 result.append(product)
-                print(product)
+                
         time.sleep(1)
 
     # Saponia
     for x in range (0,7):
         y = x * 100
         url = f'https://trgovina.mercator.si/market/products/browseProducts/getProducts?limit=100&offset={x}&filterData%5Bcategories%5D=14535906&filterData%5Boffset%5D=6&from={y}&_=168493248856'
+        print(url)
         r = headers(url,indProxy)
         data = json.loads(r)
 
@@ -58,7 +60,7 @@ def main():
                 product.append(d['data']['current_price'])
                 product.append(d['data']['gtins'][0]['gtin'][:13])
                 result.append(product)
-                print(product)
+                
         time.sleep(1)
 
     # inserting data

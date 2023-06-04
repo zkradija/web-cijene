@@ -27,8 +27,8 @@ def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0
-    web_site=10
-    trgovina=20
+    web_site = 10
+    trgovina = 20
     date_str = str(date.today())
     barcode = ''
     start_time = time.time()
@@ -63,7 +63,7 @@ def main():
             product_dict[product[5]]=1
             product.append(barcode)
             result.append(product)
-            print(product)
+            
         time.sleep(1)
 
     # inserting data

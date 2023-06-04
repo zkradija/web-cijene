@@ -1,12 +1,12 @@
 import sys
 import pyodbc as odbc
-import config
+import config_test
 
 def insert_sql(result):
-    server = config.server
-    database = config.database
-    username = config.username
-    password = config.password
+    server = config_test.server
+    database = config_test.database
+    username = config_test.username
+    password = config_test.password
 
     conn_str =  f'DRIVER={{ODBC Driver 17 for SQL Server}};' \
                 f'SERVER={server};' \

@@ -26,6 +26,7 @@ def main():
     barcode = ''    
     start_time = time.time()
     for k in kat:
+        print(k)
         r = headers(k[1], indProxy)
         data = json.loads(r)
         for d in data['hits']:
@@ -40,7 +41,7 @@ def main():
             product.append(float(d['masterValues']['best-price']))
             product.append(barcode)
             result.append(product)
-            print(product)
+            
         time.sleep(1)
         
     # inserting data

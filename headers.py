@@ -1,5 +1,5 @@
 import requests
-import config
+import config_test
 
 import random
 
@@ -37,7 +37,7 @@ def headers(url,indProxy):
         response = requests.get(
         url='https://proxy.scrapeops.io/v1/',
         params={
-            'api_key': config.scrapeops_api_key,
+            'api_key': config_test.scrapeops_api_key,
             'url': url, 
         },
         )

@@ -107,8 +107,9 @@ def main():
                 .strip().replace('.','').replace(',','.'))
             product.append(barcode)
             result.append(product)
-            print(product)
+            
     for k in kat:
+        print(k)
         parse(k[1],k[2])
 
     driver.quit()
