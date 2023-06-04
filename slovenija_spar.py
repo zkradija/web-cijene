@@ -1,6 +1,6 @@
 import json
 import time
-from datetime import date
+from datetime import date, datetime
 
 from headers import headers
 from insert_sql import insert_sql
@@ -15,14 +15,15 @@ kat = [ ['Kandit','https://search-spar.spar-ics.com/fact-finder/rest/v4/search/p
         ['Saponia','https://search-spar.spar-ics.com/fact-finder/rest/v4/search/products_lmos_si?query=*&q=*&page=1&hitsPerPage=1000&filter=category-path:S14-1-2&substringFilter=pos-visible:81701']]
 
 def main():
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0
     web_site=8
     trgovina = 18
     date_str = str(date.today())
 
-    # there is no gtin_kom so im using dummy data
-    gtin_kom = ''    
+    # there is no barcode so im using dummy data
+    barcode = ''    
     start_time = time.time()
     for k in kat:
         r = headers(k[1], indProxy)
@@ -37,7 +38,7 @@ def main():
             product.append(d['id'])
             product.append(d['masterValues']['title'] )
             product.append(float(d['masterValues']['best-price']))
-            product.append(gtin_kom)
+            product.append(barcode)
             result.append(product)
             print(product)
         time.sleep(1)

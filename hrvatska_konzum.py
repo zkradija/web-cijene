@@ -1,5 +1,6 @@
+import sys
 import time
-from datetime import date
+from datetime import date, datetime
 
 from bs4 import BeautifulSoup, SoupStrainer
 
@@ -20,15 +21,15 @@ kat =   [['Kandit','https://www.konzum.hr/web/t/kategorije/slatkisi-i-grickalice
         ['Saponia','https://www.konzum.hr/web/t/kategorije/njega-i-higijena/njega-zubi/paste']]
 
 def main():
-
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0
     web_site=1
     store = 1
     date_str = str(date.today())
 
-    # there is no gtin_kom so im using dummy data
-    gtin_kom = ''
+    # there is no barcode so im using dummy data
+    barcode = ''
     start_time = time.time()
 
     for k in kat:
@@ -59,7 +60,7 @@ def main():
                         .replace(',', '.')
                     )
                 )
-                product.append(gtin_kom)
+                product.append(barcode)
                 result.append(product)
                 print(product)
 

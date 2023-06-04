@@ -1,12 +1,12 @@
 import sys
 import pyodbc as odbc
-import config_test
+import config
 
 def insert_sql(result):
-    server = config_test.server
-    database = config_test.database
-    username = config_test.username
-    password = config_test.password
+    server = config.server
+    database = config.database
+    username = config.username
+    password = config.password
 
     conn_str =  f'DRIVER={{ODBC Driver 17 for SQL Server}};' \
                 f'SERVER={server};' \
@@ -27,7 +27,7 @@ def insert_sql(result):
 
     insert_statement = '''
         insert into Cijene 
-        (WebMjestoId,TrgovinaId,datum,Poveznica,Kategorija,Sifra,Naziv,Cijena,GtinKom) 
+        (WebMjestoId,TrgovinaId,datum,Poveznica,Kategorija,Sifra,Naziv,Cijena,Barkod) 
         values (?,?,?,?,?,?,?,?,?)
         '''
 

@@ -1,5 +1,5 @@
 import time
-from datetime import date
+from datetime import date, datetime
 
 import cyrtranslit
 from bs4 import BeautifulSoup
@@ -14,14 +14,15 @@ kat =   [
         ]
 
 def main():
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0
     web_site=12
     store = 22
     date_str = str(date.today())
 
-    # there is no gtin_kom so im using dummy data
-    gtin_kom = ''    
+    # there is no barcode so im using dummy data
+    barcode = ''    
     start_time = time.time()
 
     def starts_with_my_class(class_name):
@@ -52,7 +53,7 @@ def main():
                     .replace(',', '')
                 )
             )
-            product.append(gtin_kom)
+            product.append(barcode)
             result.append(product)
             print(product)
         time.sleep(1)

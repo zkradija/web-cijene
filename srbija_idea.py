@@ -1,5 +1,5 @@
 import time
-from datetime import date
+from datetime import date, datetime
 
 import requests
 from insert_sql import insert_sql
@@ -24,6 +24,7 @@ kat =   [['Kandit','https://online.idea.rs/#!/categories/60014036/mlecna-cokolad
 
 
 def main():
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     # identificiram se kao Chrome browser
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",

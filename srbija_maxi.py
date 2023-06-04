@@ -1,6 +1,6 @@
 import json
 import time
-from datetime import date
+from datetime import date, datetime
 
 from headers import headers
 from insert_sql import insert_sql
@@ -13,14 +13,15 @@ kat =   [['Kandit','Čokoladni proizvodi','0701'],
         ['Saponia', 'Paste za zube', '140101']]
 
 def main():
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result=[]
     indProxy = 0
     web_site = 5
     trgovina = 4
     date_str = str(date.today())
 
-    # there is no gtin_kom so im using dummy data
-    gtin_kom = ''    
+    # there is no barcode so im using dummy data
+    barcode = ''    
     start_time = time.time()
     for k in kat:
         print(k[1])
@@ -44,7 +45,7 @@ def main():
                 product.append(d['code'])
                 product.append(d['name'])
                 product.append(float(d['price']['unitPrice']))
-                product.append(gtin_kom)
+                product.append(barcode)
                 result.append(product)
                 print(product)
             time.sleep(1)

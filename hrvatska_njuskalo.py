@@ -1,5 +1,5 @@
 import time
-from datetime import date
+from datetime import date, datetime
 
 from bs4 import BeautifulSoup
 
@@ -27,13 +27,14 @@ kat =   [['Kandit','slatkisi-grickalice'],
 
 
 def main():
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0    # not using Proxies cuz of 2 much links
     web_site = 7
     date_str = str(date.today())
 
-    # there is no gtin_kom so im using dummy data
-    gtin_kom = ''
+    # there is no barcode so im using dummy data
+    barcode = ''
     start_time = time.time()
 
     for t in store_list:
@@ -62,7 +63,7 @@ def main():
                             product.append(float(div.find('p',{'class': 'newPrice'})
                                 .get_text().strip().split(' ')[0]
                                 .replace(".","").replace(",",".")))
-                            product.append(gtin_kom)
+                            product.append(barcode)
                             result.append(product)
                             print(product)
         time.sleep(1)

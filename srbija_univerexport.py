@@ -1,5 +1,5 @@
 import time
-from datetime import date
+from datetime import date, datetime
 
 from bs4 import BeautifulSoup
 
@@ -18,14 +18,15 @@ kat = [ ['Kandit','https://elakolije.rs/70004/polica/cokoladni-program'],
 
 
 def main():
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0
     web_site=6
     trgovina = 5
     date_str = str(date.today())
 
-    # there is no gtin_kom so im using dummy data
-    gtin_kom=''
+    # there is no barcode so im using dummy data
+    barcode=''
     start_time = time.time()
 
     for k in kat:
@@ -37,8 +38,9 @@ def main():
             product.append(web_site)
             product.append(trgovina)
             product.append(date_str)
-            product.append(str(div.find('div', {'class': 'artikli_pojedinacan_slika_okvir'})
-                               .find('a')['href']))
+            product.append(
+                str(div.find('div', {'class': 'artikli_pojedinacan_slika_okvir'})
+                .find('a')['href']))
             product.append(k[0])
             product.append(div.find('div', {'class': 'artikli_pojedinacan_slika_okvir'})
                            .find('a')['href'].split('/')[3])
@@ -46,7 +48,7 @@ def main():
                            .get_text().strip())
             product.append(float(div.find('div',{'class': 'artikli_pojedinacan_cena'})
                                  .get_text().replace('din/kom','')))
-            product.append(gtin_kom)
+            product.append(barcode)
             result.append(product)
             print(product)
         time.sleep(1)

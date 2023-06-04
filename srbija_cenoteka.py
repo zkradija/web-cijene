@@ -1,5 +1,5 @@
 import time
-from datetime import date
+from datetime import date, datetime
 
 from bs4 import BeautifulSoup
 
@@ -14,13 +14,14 @@ kat =   [['Kandit','https://cenoteka.rs/proizvodi/slatkisi-i-grickalice/cokolade
 
 
 def main():
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0
     web_site = 3
     date_str = str(date.today())
 
-    # there is no gtin_kom so im using dummy data
-    gtin_kom = ''   
+    # there is no barcode so im using dummy data
+    barcode = ''   
     start_time = time.time()
     for k in kat:
         web_page = headers(k[1], indProxy)
@@ -51,7 +52,7 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[0]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(gtin_kom)
+                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         print(product)
@@ -68,7 +69,7 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[1]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(gtin_kom)
+                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         print(product)
@@ -86,7 +87,7 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[2]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(gtin_kom)
+                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         print(product)
@@ -104,7 +105,7 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[3]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(gtin_kom)
+                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         print(product)
@@ -122,7 +123,7 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[4]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(gtin_kom)
+                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         print(product)
@@ -140,7 +141,7 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[5]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(gtin_kom)
+                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         print(product)
@@ -160,7 +161,7 @@ def main():
                             product.append(d.find_all('div')[1].get_text().strip())
                             product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[6]
                                                  .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                            product.append(gtin_kom)
+                            product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         print(product)

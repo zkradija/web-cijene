@@ -1,11 +1,12 @@
 import json
 import time
-from datetime import date
+from datetime import date, datetime
 
 from headers import headers
 from insert_sql import insert_sql
 
 def main():
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0
     web_site = 2

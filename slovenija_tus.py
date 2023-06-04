@@ -1,5 +1,5 @@
 import time
-from datetime import date
+from datetime import date, datetime
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -43,14 +43,15 @@ kat =   [['Kandit','https://hitrinakup.com/kategorije/Sladko%20in%20slano/Sladki
 
 
 def main():
+    print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     time_sleep = 3
     web_site=9
     store = 19
     date_str = str(date.today())
 
-    # there is no gtin_kom so im using dummy data
-    gtin_kom = ''    
+    # there is no barcode so im using dummy data
+    barcode = ''    
     start_time = time.time()
 
     options = webdriver.ChromeOptions()
@@ -104,7 +105,7 @@ def main():
             product.append(
                 a.find('span', {'id': 'price'}).get_text().replace('\xa0€ / kos','')
                 .strip().replace('.','').replace(',','.'))
-            product.append(gtin_kom)
+            product.append(barcode)
             result.append(product)
             print(product)
     for k in kat:
