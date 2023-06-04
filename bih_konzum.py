@@ -2,7 +2,7 @@ import json
 import time
 from datetime import date, datetime
 
-from headers import headers
+from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 kat = [ ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471252&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723560399'],
@@ -22,8 +22,8 @@ def main():
     start_time = time.time()
     
     for k in kat:
-        print[k]
-        r = headers(k[1], indProxy)
+        print(k)
+        r = fake_headers(k[1], indProxy)
         data = json.loads(r)
 
         for d in data['products']:

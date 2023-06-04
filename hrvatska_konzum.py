@@ -1,10 +1,9 @@
-import sys
 import time
 from datetime import date, datetime
 
 from bs4 import BeautifulSoup, SoupStrainer
 
-from headers import headers
+from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 kat =   [['Kandit','https://www.konzum.hr/web/t/kategorije/slatkisi-i-grickalice/cokolade'],
@@ -34,7 +33,7 @@ def main():
 
     for k in kat:
         print(k)
-        web_page = headers(k[1], indProxy)
+        web_page = fake_headers(k[1], indProxy)
         only_article_tags = SoupStrainer(
             'article'
         )  # i'm interested only in article tags

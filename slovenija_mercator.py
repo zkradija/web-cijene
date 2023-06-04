@@ -2,7 +2,7 @@ import json
 import time
 from datetime import date, datetime
 
-from headers import headers
+from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 def main():
@@ -19,7 +19,7 @@ def main():
         y = x * 100
         url = f'https://trgovina.mercator.si/market/products/browseProducts/getProducts?limit=100&offset={x}&filterData%5Bcategories%5D=14535711&filterData%5Boffset%5D=8&from={y}&_=1684918912105'
         print(url)
-        r = headers(url, indProxy)
+        r = fake_headers(url, indProxy)
         data = json.loads(r)
         for d in data:
             product = []
@@ -43,7 +43,7 @@ def main():
         y = x * 100
         url = f'https://trgovina.mercator.si/market/products/browseProducts/getProducts?limit=100&offset={x}&filterData%5Bcategories%5D=14535906&filterData%5Boffset%5D=6&from={y}&_=168493248856'
         print(url)
-        r = headers(url,indProxy)
+        r = fake_headers(url,indProxy)
         data = json.loads(r)
 
         for d in data:

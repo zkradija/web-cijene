@@ -2,7 +2,7 @@ import json
 import time
 from datetime import date, datetime
 
-from headers import headers
+from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 
@@ -27,13 +27,13 @@ def main():
         print(k)
         print(k[1])
         url_page_number = 'https://www.maxi.rs/api/v1/?operationName=GetCategoryProductSearch&variables=%7B%22lang%22%3A%22sr%22%2C%22searchQuery%22%3A%22%3Arelevance%22%2C%22sort%22%3A%22relevance%22%2C%22category%22%3A%22'+ str(k[2]) +'%22%2C%22pageNumber%22%3A0%2C%22pageSize%22%3A20%2C%22filterFlag%22%3Atrue%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%2265b0b1aacb2caeea6468873e8f7fde0ef82ffb0c4f9c93583c41070fa1f13c82%22%7D%7D'
-        r = headers(url_page_number, indProxy)
+        r = fake_headers(url_page_number, indProxy)
         data = json.loads(r)
         page_number = int(data['data']['categoryProductSearch']['pagination']['totalPages'])
 
         for x in range (0,page_number):
             url = 'https://www.maxi.rs/api/v1/?operationName=GetCategoryProductSearch&variables=%7B%22lang%22%3A%22sr%22%2C%22searchQuery%22%3A%22%3Arelevance%22%2C%22sort%22%3A%22relevance%22%2C%22category%22%3A%22' + str(k[2]) + '%22%2C%22pageNumber%22%3A' + str(x) + "%2C%22pageSize%22%3A20%2C%22filterFlag%22%3Atrue%2C%22plainChildCategories%22%3Afalse%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%2265b0b1aacb2caeea6468873e8f7fde0ef82ffb0c4f9c93583c41070fa1f13c82%22%7D%7D"
-            r = headers(url, indProxy)
+            r = fake_headers(url, indProxy)
             data = json.loads(r)
 
             for d in data['data']['categoryProductSearch']['products']:

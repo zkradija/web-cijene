@@ -3,7 +3,7 @@ from datetime import date, datetime
 
 from bs4 import BeautifulSoup
 
-from headers import headers
+from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 store_dict = {
@@ -43,7 +43,7 @@ def main():
             # 10 pages / store is more than enough
             for x in range(1,11):   
                 url=f'https://popusti.njuskalo.hr/trgovina/{t}/{k[1]}?page={x}&ajax=1&xitiIndex=16'
-                web_page = headers(url, indProxy)
+                web_page = fake_headers(url, indProxy)
                 soup = BeautifulSoup(web_page, 'html.parser')
                 # don't know exact page numbers, so i'm checking if element exist
                 if soup.find('div',{'class': 'productItemType1 cf offer'}):

@@ -3,7 +3,7 @@ from datetime import date, datetime
 
 from bs4 import BeautifulSoup
 
-from headers import headers
+from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 
@@ -25,7 +25,7 @@ def main():
     start_time = time.time()
     for k in kat:
         print(k)
-        web_page = headers(k[1], indProxy)
+        web_page = fake_headers(k[1], indProxy)
         soup = BeautifulSoup(web_page, "html.parser")
 
         br_str = int(soup.find('ul', {'class':'pagination justify-content-center'})
@@ -33,7 +33,7 @@ def main():
 
         for x in range (1, br_str + 1):
             url = k[1] + '?page=' + str(x)
-            web_page = headers(url, indProxy)
+            web_page = fake_headers(url, indProxy)
             soup = BeautifulSoup(web_page, "html.parser")
 
             for d in soup.find('div', {'id' : 'products'}).find_all('div'):

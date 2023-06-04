@@ -2,9 +2,8 @@ import json
 import time
 from datetime import date, datetime
 
-from headers import headers
+from fake_headers import fake_headers
 from insert_sql import insert_sql
-
 
 kat = [ ['Kandit','https://search-spar.spar-ics.com/fact-finder/rest/v4/search/products_lmos_si?query=*&q=*&page=1&hitsPerPage=1000&filter=category-path%3AS10-1-1&substringFilter=pos-visible%3A81701'],
         ['Kandit','https://search-spar.spar-ics.com/fact-finder/rest/v4/search/products_lmos_si?query=*&q=*&page=1&hitsPerPage=1000&filter=category-path%3AS10-1-2&substringFilter=pos-visible%3A81701'],
@@ -27,7 +26,7 @@ def main():
     start_time = time.time()
     for k in kat:
         print(k)
-        r = headers(k[1], indProxy)
+        r = fake_headers(k[1], indProxy)
         data = json.loads(r)
         for d in data['hits']:
             product=[]

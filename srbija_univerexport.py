@@ -3,7 +3,7 @@ from datetime import date, datetime
 
 from bs4 import BeautifulSoup
 
-from headers import headers
+from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 kat = [ ['Kandit','https://elakolije.rs/70004/polica/cokoladni-program'],
@@ -31,7 +31,7 @@ def main():
 
     for k in kat:
         print(k)
-        web_page = headers(k[1], indProxy)
+        web_page = fake_headers(k[1], indProxy)
         soup = BeautifulSoup(web_page, 'html.parser')
 
         for div in soup.find_all('div', {'class': 'artikli_pojedinacan_artikal'}):

@@ -1,7 +1,8 @@
+import json
 import time
 from datetime import date, datetime
 
-import requests
+from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 
@@ -25,27 +26,19 @@ kat =   [['Kandit','https://online.idea.rs/#!/categories/60014036/mlecna-cokolad
 
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-    
-    # Chrome browser
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
-        "Accept-Encoding": "*",
-        "Connection": "keep-alive",
-    }
 
     result=[]
-    web_site=4
+    indProxy = 0
+    web_site = 4
     store = 3
     date_str = str(date.today())
 
     start_time = time.time()
-    s = requests.Session()
     for k in kat:
         print(k)
-        url = "https://online.idea.rs/v2/categories/" + str(k[2]) + "/products"
-        querystring = {"per_page":"1000","page":"1","filter^%^5Bsort^%^5D":"soldStatisticsDesc"}
-        r = s.request('GET', url, headers=headers, params=querystring)
-        data = r.json()
+        url = f'https://online.idea.rs/v2/categories/{k[2]}/products?per_page=1000&page=1&filter%5E%25%5E5Bsort%5E%25%5E5D=soldStatisticsDesc'
+        r = fake_headers(url, indProxy)
+        data = json.loads(r)
         for d in data['products']:
             product = []
             product.append(web_site)

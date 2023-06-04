@@ -1,5 +1,5 @@
 import requests
-import config_test
+import config
 
 import random
 
@@ -13,17 +13,23 @@ user_agent_list = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
         'Chrome/87.0.4280.141 Safari/537.36 Edg/87.0.664.75',
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-        'Chrome/70.0.3538.102 Safari/537.36 Edge/18.18363'
+        'Chrome/70.0.3538.102 Safari/537.36 Edge/18.18363',
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-        'Chrome/113.0.0.0 Safari/537.36'
+        'Chrome/113.0.0.0 Safari/537.36',
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-        'Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.57'
+        'Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.57',
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
-        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36'
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
 ]
 
 
-def headers(url,indProxy):
+def fake_headers(url,indProxy):
+    
+    # 0 - my fake headers (fake user agents)
+    # 1 - fake headers via proxy
+
     if indProxy == 0:
         headers_str = {
             'User-Agent': user_agent_list[random.randint(0, len(user_agent_list)-1)],
@@ -37,8 +43,12 @@ def headers(url,indProxy):
         response = requests.get(
         url='https://proxy.scrapeops.io/v1/',
         params={
-            'api_key': config_test.scrapeops_api_key,
-            'url': url, 
+            'api_key': config.scrapeops_api_key,
+            'url': url,
+            'render_js': 'true', 
+            'residential': 'true', 
+            'country': 'hr'
         },
         )
     return response.text
+
