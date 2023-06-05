@@ -2,6 +2,8 @@ import sys
 import pyodbc as odbc
 import config
 
+# config containts sensitive data, hence its hidden
+
 def insert_sql(result):
     server = config.server
     database = config.database
