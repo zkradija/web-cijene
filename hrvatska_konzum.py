@@ -31,37 +31,49 @@ def main():
     barcode = ''
     start_time = time.time()
 
-    for k in kat:
-        print(k)
-        web_page = fake_headers(k[1], indProxy)
-        only_article_tags = SoupStrainer(
-            'article'
-        )  # i'm interested only in article tags
-        soup = BeautifulSoup(web_page, 'html.parser', parse_only=only_article_tags)
+    product_dict = {}
 
-        for article in soup.find_all('article'):
-            product = []
-            if article is not None:
-                product.append(web_site)
-                product.append(store)
-                product.append(date_str)
-                product.append(
-                    'https://konzum.hr'
-                    + str(article.find('a', {'class': 'link-to-product'})['href'])
+    for k in kat:
+        for x in range(1,11):   # expecting less then 1000 products / category
+            print(f'{k} --> page {x}')
+            web_page = fake_headers(
+                f'{k[1]}?page={x}&per_page=100&sort%5B%5D=', indProxy
                 )
-                product.append(k[0])
-                product.append(str(article.div.attrs['data-ga-id']))
-                product.append(str(article.div.attrs['data-ga-name']))
-                product.append(
-                    float(
-                        article.div.attrs['data-ga-price']
-                        .replace(' €', '')
-                        .replace('.', '')
-                        .replace(',', '.')
-                    )
-                )
-                product.append(barcode)
-                result.append(product)
+            only_article_tags = SoupStrainer(
+                'article'
+            )  # i'm interested only in article tags
+            soup = BeautifulSoup(web_page, 'html.parser', parse_only=only_article_tags)
+            if soup.find('article'):
+                for article in soup.find_all('article'):
+                    if product_dict.get(str(article.div.attrs['data-ga-id'])):
+                        pass
+                    else:
+                        product = []
+                        product.append(web_site)
+                        product.append(store)
+                        product.append(date_str)
+                        product.append(
+                            'https://konzum.hr'
+                            + str(article
+                                  .find('a', {'class': 'link-to-product'})['href'])
+                        )
+                        product.append(k[0])
+                        product.append(str(article.div.attrs['data-ga-id']))
+                        product.append(str(article.div.attrs['data-ga-name']))
+                        product.append(
+                            float(
+                                article.div.attrs['data-ga-price']
+                                .replace(' €', '')
+                                .replace('.', '')
+                                .replace(',', '.')
+                            )
+                        )
+                        product.append(barcode)
+                        result.append(product)
+                        product_dict[product[5]] = 1
+            else:
+                break
+            time.sleep(1)
                 
 
     # inserting data

@@ -7,6 +7,7 @@ import crna_gora_voli_trade
 import hrvatska_kaufland
 import hrvatska_konzum
 import hrvatska_njuskalo
+import hrvatska_plodine
 import makedonija_reptil
 import slovenija_mercator
 import slovenija_spar
@@ -35,6 +36,7 @@ if __name__ == '__main__':
     hrvatska_kaufland.main()
     hrvatska_konzum.main()
     hrvatska_njuskalo.main()
+    hrvatska_plodine.main()
     makedonija_reptil.main()
     slovenija_mercator.main()
     slovenija_spar.main()

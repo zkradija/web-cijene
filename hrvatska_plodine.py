@@ -13,8 +13,8 @@ def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     result = []
     indProxy = 0
-    web_site = 14
-    store = 24
+    web_site = 15
+    store = 25
     date_str = str(date.today())
 
     # there is no barcode so im using dummy data
@@ -46,6 +46,8 @@ def main():
                 if div.find('p',{'class': 'card__quantity'}):
                     quantity = div.find('p',{'class': 'card__quantity'}).get_text()
                     name =f'{brand} {title} {quantity}'
+                if name.strip() == '':
+                    break
                 product.append(name.strip())
                 product.append(
                     float(
