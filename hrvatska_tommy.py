@@ -32,8 +32,6 @@ def main():
     web_site = 19
     trgovina = 29
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
     start_time = time.time()
     for k in kat:
         print(k)
