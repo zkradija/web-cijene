@@ -25,17 +25,18 @@ user_agent_list = [
 ]
 
 
-def fake_headers(url,indProxy):
+def fake_headers(url, indProxy, headers_str=''):
     
     # 0 - my fake headers (fake user agents)
     # 1 - fake headers via proxy
 
     if indProxy == 0:
-        headers_str = {
-            'User-Agent': user_agent_list[random.randint(0, len(user_agent_list)-1)],
-            'Accept-Encoding': '*',
-            'Connection': 'keep-alive'
-            }
+        if headers_str == '':
+            headers_str = {
+                'User-Agent': user_agent_list[random.randint(0, len(user_agent_list)-1)],
+                'Accept-Encoding': '*',
+                'Connection': 'keep-alive'
+                }
         print(headers_str)
         response = requests.get(url, headers=headers_str)
         return response.text
