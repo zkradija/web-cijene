@@ -7,6 +7,7 @@ import crna_gora_voli_trade
 import hrvatska_dm
 import hrvatska_kaufland
 import hrvatska_konzum
+import hrvatska_metro
 import hrvatska_njuskalo
 import hrvatska_plodine
 import hrvatska_tommy
@@ -38,6 +39,7 @@ if __name__ == '__main__':
     hrvatska_dm.main()
     hrvatska_kaufland.main()
     hrvatska_konzum.main()
+    hrvatska_metro.main()
     hrvatska_njuskalo.main()
     hrvatska_plodine.main()
     hrvatska_tommy.main()

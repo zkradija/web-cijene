@@ -99,8 +99,10 @@ def main():
             product.append(k[0])
             product.append(str(a['href']).split('/')[2])
             product.append(
-                a.find('div', {'class': 'HorizontalScrollingItems_itemCardDetailsContainer__cfMAa'})
-                .find('div', {'class': 'HorizontalScrollingItems_itemProductTitle__GxcAp'})
+                a.find('div', {'class': 
+                    'HorizontalScrollingItems_itemCardDetailsContainer__cfMAa'})
+                .find('div', {'class': 
+                    'HorizontalScrollingItems_itemProductTitle__GxcAp'})
                 .get_text().strip())
             product.append(
                 a.find('span', {'id': 'price'}).get_text().replace('\xa0€ / kos','')
