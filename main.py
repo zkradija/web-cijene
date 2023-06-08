@@ -5,6 +5,7 @@ from datetime import datetime
 import bih_konzum
 import crna_gora_voli_trade
 import hrvatska_dm
+import hrvatska_jadranka
 import hrvatska_kaufland
 import hrvatska_konzum
 import hrvatska_metro
@@ -37,6 +38,7 @@ if __name__ == '__main__':
     bih_konzum.main()
     crna_gora_voli_trade.main()
     hrvatska_dm.main()
+    hrvatska_jadranka.main()
     hrvatska_kaufland.main()
     hrvatska_konzum.main()
     hrvatska_metro.main()

@@ -25,7 +25,7 @@ user_agent_list = [
 ]
 
 
-def fake_headers(url, indProxy, headers_str=''):
+def fake_headers(url, indProxy, headers_str='', indVerify=True):
     
     # 0 - my fake headers (fake user agents)
     # 1 - fake headers via proxy
@@ -38,7 +38,7 @@ def fake_headers(url, indProxy, headers_str=''):
                 'Connection': 'keep-alive'
                 }
         print(headers_str)
-        response = requests.get(url, headers=headers_str)
+        response = requests.get(url, headers=headers_str, verify=indVerify)
         return response.text
     if indProxy == 1:
         response = requests.get(
