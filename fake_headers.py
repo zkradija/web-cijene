@@ -33,7 +33,7 @@ def fake_headers(url, indProxy, headers_str='', indVerify=True):
     if indProxy == 0:
         if headers_str == '':
             headers_str = {
-                'User-Agent': user_agent_list[random.randint(0, len(user_agent_list)-1)],
+                'User-Agent': user_agent_list[random.randint(0, len(user_agent_list)-1)],  # noqa: E501
                 'Accept-Encoding': '*',
                 'Connection': 'keep-alive'
                 }

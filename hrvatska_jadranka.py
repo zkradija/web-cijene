@@ -1,7 +1,7 @@
 import time
 from datetime import date, datetime
 
-from bs4 import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup
 
 from fake_headers import fake_headers
 from insert_sql import insert_sql
