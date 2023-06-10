@@ -49,9 +49,6 @@ def main():
     web_site=9
     store = 19
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
-    barcode = ''    
     start_time = time.time()
 
     options = webdriver.ChromeOptions()
@@ -107,7 +104,6 @@ def main():
             product.append(
                 a.find('span', {'id': 'price'}).get_text().replace('\xa0€ / kos','')
                 .strip().replace('.','').replace(',','.'))
-            product.append(barcode)
             result.append(product)
             
     for k in kat:

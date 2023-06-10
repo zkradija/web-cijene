@@ -33,7 +33,6 @@ def main():
                 product.append(d['data']['code'])
                 product.append(d['data']['name'])
                 product.append(d['data']['current_price'])
-                product.append(d['data']['gtins'][0]['gtin'])
                 result.append(product)
                 
         time.sleep(1)
@@ -58,7 +57,6 @@ def main():
                 product.append(d['data']['code'])
                 product.append(d['data']['name'])
                 product.append(d['data']['current_price'])
-                product.append(d['data']['gtins'][0]['gtin'][:13])
                 result.append(product)
                 
         time.sleep(1)

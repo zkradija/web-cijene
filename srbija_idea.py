@@ -32,7 +32,6 @@ def main():
     web_site = 4
     store = 3
     date_str = str(date.today())
-
     start_time = time.time()
     for k in kat:
         print(k)
@@ -49,7 +48,6 @@ def main():
             product.append(d['id'])
             product.append(d['name'])
             product.append(float(float(d['price']['amount']/100)))
-            product.append(d['barcodes'][0][:13])
             result.append(product)
             
         time.sleep(1)

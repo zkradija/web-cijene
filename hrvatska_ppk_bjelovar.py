@@ -31,9 +31,6 @@ def main():
     web_site = 22
     store = 32
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
-    barcode = ''
     start_time = time.time()
     product_dict = {}
 
@@ -61,7 +58,6 @@ def main():
                                if float(price.replace(',', '.')) > 0]
                 min_price = min(prices_float)
                 product.append(min_price)
-                product.append(barcode)
                 result.append(product)
                 product_dict[product[5]] = 1
         time.sleep(1)

@@ -2,7 +2,7 @@ import sys
 import pyodbc as odbc
 import config
 
-# config containts sensitive data, hence its hidden
+# config contains sensitive data, hence it's hidden
 
 def insert_sql(result):
     server = config.server
@@ -15,32 +15,30 @@ def insert_sql(result):
                 f'DATABASE={database};' \
                 f'UID={username};' \
                 f'PWD={{{password}}};'
-    conn = odbc.connect(conn_str)
-    cursor = conn.cursor()
 
     try:
         conn = odbc.connect(conn_str)
-    except Exception as e:
-        print(e)
-        print('Task is terminated')
-        sys.exit
-    else:
         cursor = conn.cursor()
 
-    insert_statement = '''
-        insert into Cijene 
-        (WebMjestoId,TrgovinaId,datum,Poveznica,Kategorija,Sifra,Naziv,Cijena,Barkod) 
-        values (?,?,?,?,?,?,?,?,?)
-        '''
+        insert_statement = '''
+            INSERT INTO Cijene 
+            (WebMjestoId, TrgovinaId, datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        '''  # noqa: E501
 
-    try:
         for r in result:
             cursor.execute(insert_statement, r)
-    except Exception as e:
-        cursor.rollback()
-        print(e.value)
-        print('Transaction rolled back')
-    else:
+
         print(f'{len(result)} records inserted successfully')
         cursor.commit()
-        cursor.close()
+    except Exception as e:
+        if 'cursor' in locals():
+            cursor.rollback()
+        print(e)
+        print('Task is terminated')
+        sys.exit()
+    finally:
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()

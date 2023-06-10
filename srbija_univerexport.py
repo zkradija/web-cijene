@@ -24,9 +24,6 @@ def main():
     web_site = 6
     trgovina = 5
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
-    barcode=''
     start_time = time.time()
 
     for k in kat:
@@ -49,7 +46,6 @@ def main():
                            .get_text().strip())
             product.append(float(div.find('div',{'class': 'artikli_pojedinacan_cena'})
                                  .get_text().replace('din/kom','')))
-            product.append(barcode)
             result.append(product)
             
         time.sleep(1)

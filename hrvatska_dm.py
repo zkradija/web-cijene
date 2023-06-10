@@ -6,39 +6,43 @@ from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 
-kat =   [['Saponia','https://product-search.services.dmtech.com/hr/search/crawl?allCategories.id=060500&pageSize=10000&sort=editorial_relevance&type=search-static']]
+CATEGORIES =   [
+        ['Saponia','https://product-search.services.dmtech.com/hr/search/crawl?allCategories.id=060500&pageSize=10000&sort=editorial_relevance&type=search-static']
+]
 
 
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-
-    result=[]
-    indProxy = 0
-    web_site = 17
-    store = 27
-    date_str = str(date.today())
-
     start_time = time.time()
-    for k in kat:
-        print(k)
-        r = fake_headers(k[1], indProxy)
-        data = json.loads(r)
-        for d in data['products']:
-            product = []
-            product.append(web_site)
-            product.append(store)
-            product.append(date_str)
-            product.append('https://www.dm.hr' + d['relativeProductUrl'])
-            product.append(k[0])
-            product.append(d['dan'])
-            product.append(d['name'])
-            product.append(float(float(d['price']['value'])))
-            product.append(str(d['gtin'])[:20])
-            result.append(product)
+    products = []
+    unique_codes = set()
+    
+    for category in CATEGORIES:
+        print(category)
+        category_name, url = category
+        response = fake_headers(url, 0)
+        data = json.loads(response)
+        
+        for product in data['products']:
+            code = product['dan']
+            if code not in unique_codes:
+            # Only add the product if its code is not already in the set
+                products.append([
+                    17, # web_site
+                    27, # store
+                    str(date.today()),  # date_str
+                    'https://www.dm.hr' + product['relativeProductUrl'],
+                    category_name,      # category_name
+                    product['dan'],     # code
+                    product['name'],    # name
+                    float(product['price']['value'])    # price
+                ])
+                unique_codes.add(code)
+        
         time.sleep(1)
     
-    # inserting data
-    insert_sql(result)
+    # Inserting data
+    insert_sql(products)
 
     end_time = time.time()
     elapsed_time = end_time - start_time

@@ -19,9 +19,6 @@ def main():
     web_site = 5
     trgovina = 4
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
-    barcode = ''    
     start_time = time.time()
     for k in kat:
         print(k)
@@ -49,7 +46,6 @@ def main():
                     .replace(' RSD','')
                     .replace('.','')
                     .replace(',','.')))
-                product.append(barcode)
                 result.append(product)
                 print(product)
                 

@@ -5,44 +5,48 @@ from datetime import date, datetime
 from fake_headers import fake_headers
 from insert_sql import insert_sql
 
-kat = [ ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471252&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723560399'],
-        ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471257&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723765060'],
-        ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471265&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723789845'],
-        ['Saponia', 'https://www.konzumshop.ba/v2/categories/5472087/products?filter%5Bshow%5D=all&filter%5Bsort_field%5D=soldStatistics&filter%5Bsort%5D=soldStatistics&page=1&per_page=1000&time=1685723815904'],
-        ['Saponia', 'https://www.konzumshop.ba/v2/categories/5471607/products?filter%5Bshow%5D=all&filter%5Bsort_field%5D=soldStatistics&filter%5Bsort%5D=soldStatistics&page=1&per_page=1000&time=1685723857930'],
-        ]
+
+CATEGORIES = [
+    ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471252&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723560399'],  # noqa: E501
+    ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471257&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723765060'],  # noqa: E501
+    ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471265&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723789845'],  # noqa: E501
+    ['Saponia', 'https://www.konzumshop.ba/v2/categories/5472087/products?filter%5Bshow%5D=all&filter%5Bsort_field%5D=soldStatistics&filter%5Bsort%5D=soldStatistics&page=1&per_page=1000&time=1685723815904'],  # noqa: E501
+    ['Saponia', 'https://www.konzumshop.ba/v2/categories/5471607/products?filter%5Bshow%5D=all&filter%5Bsort_field%5D=soldStatistics&filter%5Bsort%5D=soldStatistics&page=1&per_page=1000&time=1685723857930'],  # noqa: E501
+]
 
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-    result = []
-    indProxy = 0
-    web_site=11
-    store = 21
-    date_str = str(date.today())
     start_time = time.time()
+    products = []
+    unique_codes = set()  # Set to store unique product codes
     
-    for k in kat:
-        print(k)
-        r = fake_headers(k[1], indProxy)
-        data = json.loads(r)
+    for category in CATEGORIES:
+        print(category)
+        category_name, url = category
+        response = fake_headers(url, 0)
+        data = json.loads(response)
 
-        for d in data['products']:
-            product = []
-            product.append(web_site)
-            product.append(store)
-            product.append(date_str)
-            product.append('https://www.konzumshop.ba' + d['product_path'])
-            product.append(k[0])
-            product.append(d['code'])
-            product.append(d['name'])
-            product.append(float(d['price']['amount'])/100)
-            product.append(d['barcodes'][0])
-            result.append(product)
+        for product in data['products']:
+            code = product['code']
+            price = float(product['price']['amount']) / 100
+            if code not in unique_codes and price > 0:
+                # Only add the product if its code is not already in the set
+                products.append([
+                    11,  # web_site
+                    21,  # store
+                    str(date.today()),  # date_str
+                    'https://www.konzumshop.ba' + product['product_path'],
+                    category_name,  # category_name
+                    code,  # code
+                    product['name'],  # name
+                    price  # price
+                ])
+                unique_codes.add(code)
             
         time.sleep(1)
 
-    # inserting data
-    insert_sql(result)
+    # Inserting data
+    insert_sql(products)
 
     end_time = time.time()
     elapsed_time = end_time - start_time

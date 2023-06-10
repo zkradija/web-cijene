@@ -16,9 +16,6 @@ def main():
     web_site = 15
     store = 25
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
-    barcode = ''
     start_time = time.time()
 
     for k in kat:
@@ -57,7 +54,6 @@ def main():
                         .strip()
                         )
                 )
-                product.append(barcode)
                 result.append(product)
     
     # inserting data

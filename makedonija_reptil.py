@@ -20,11 +20,7 @@ def main():
     web_site=12
     store = 22
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
-    barcode = ''    
     start_time = time.time()
-
     def starts_with_my_class(class_name):
         return class_name and class_name.startswith(
             'product-grid-item product wd-hover-standard'
@@ -54,7 +50,6 @@ def main():
                     .replace(',', '')
                 )
             )
-            product.append(barcode)
             result.append(product)
             
         time.sleep(1)

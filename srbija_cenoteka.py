@@ -19,9 +19,6 @@ def main():
     indProxy = 0
     web_site = 3
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
-    barcode = ''   
     start_time = time.time()
     for k in kat:
         print(k)
@@ -53,7 +50,6 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[0]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         
@@ -70,7 +66,6 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[1]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         
@@ -88,7 +83,6 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[2]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         
@@ -106,7 +100,6 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[3]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         
@@ -124,7 +117,6 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[4]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         
@@ -142,7 +134,6 @@ def main():
                         product.append(d.find_all('div')[1].get_text().strip())
                         product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[5]
                                              .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                        product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         
@@ -162,7 +153,6 @@ def main():
                             product.append(d.find_all('div')[1].get_text().strip())
                             product.append(float(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})[6]
                                                  .get_text().strip().replace('-','0').replace('.','').replace(',','.')))
-                            product.append(barcode)
                         if product[7] != 0:    
                             result.append(product)
                         

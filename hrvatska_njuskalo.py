@@ -32,9 +32,6 @@ def main():
     indProxy = 0    # not using Proxies cuz of 2 much links
     web_site = 7
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
-    barcode = ''
     start_time = time.time()
 
     for t in store_list:
@@ -64,7 +61,6 @@ def main():
                             product.append(float(div.find('p',{'class': 'newPrice'})
                                 .get_text().strip().split(' ')[0]
                                 .replace(".","").replace(",",".")))
-                            product.append(barcode)
                             result.append(product)
                             
         time.sleep(1)

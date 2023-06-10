@@ -28,9 +28,6 @@ def main():
     web_site = 18
     trgovina = 28
     date_str = str(date.today())
-
-    # there is no barcode so im using dummy data
-    barcode = ''    
     start_time = time.time()
     for k in kat:
         print(k)
@@ -54,7 +51,6 @@ def main():
                 product.append(d['product_id'])
                 product.append(d['description'])
                 product.append(float(d['price']))
-                product.append(barcode)
                 result.append(product)
                 
             time.sleep(1)

@@ -25,23 +25,25 @@ user_agent_list = [
 ]
 
 
-def fake_headers(url, indProxy, headers_str='', indVerify=True):
+def fake_headers(url, indProxy, headers_str=None, indVerify=True):
     
     # 0 - my fake headers (fake user agents)
     # 1 - fake headers via proxy
 
+    session = requests.Session()
+
     if indProxy == 0:
-        if headers_str == '':
+        if headers_str is None:
             headers_str = {
-                'User-Agent': user_agent_list[random.randint(0, len(user_agent_list)-1)],  # noqa: E501
+                'User-Agent': random.choice(user_agent_list),
                 'Accept-Encoding': '*',
                 'Connection': 'keep-alive'
                 }
         print(headers_str)
-        response = requests.get(url, headers=headers_str, verify=indVerify)
+        response = session.get(url, headers=headers_str, verify=indVerify)
         return response.text
     if indProxy == 1:
-        response = requests.get(
+        response = session.get(
         url='https://proxy.scrapeops.io/v1/',
         params={
             'api_key': config.scrapeops_api_key,

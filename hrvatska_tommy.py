@@ -67,7 +67,6 @@ def main():
             product.append(d['name'])
             code = d['code']
             product.append(float(d['variants'][code]['price']['current']/100))
-            product.append(d['code'])
             result.append(product)
             
         time.sleep(1)
