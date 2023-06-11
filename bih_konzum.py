@@ -7,16 +7,16 @@ from insert_sql import insert_sql
 
 
 CATEGORIES = [
-    ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471252&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723560399'],  # noqa: E501
-    ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471257&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723765060'],  # noqa: E501
-    ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471265&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723789845'],  # noqa: E501
-    ['Saponia', 'https://www.konzumshop.ba/v2/categories/5472087/products?filter%5Bshow%5D=all&filter%5Bsort_field%5D=soldStatistics&filter%5Bsort%5D=soldStatistics&page=1&per_page=1000&time=1685723815904'],  # noqa: E501
-    ['Saponia', 'https://www.konzumshop.ba/v2/categories/5471607/products?filter%5Bshow%5D=all&filter%5Bsort_field%5D=soldStatistics&filter%5Bsort%5D=soldStatistics&page=1&per_page=1000&time=1685723857930'],  # noqa: E501
+    ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471252&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723560399'],
+    ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471257&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723765060'],
+    ['Kandit', 'https://www.konzumshop.ba/v2/categories/5471244/products?filter%5Bsubcategory_ids%5D%5B%5D=5471265&filter%5Bshow%5D=all&filter%5Bsort%5D=nameAsc&filter%5Bsort_field%5D=name&page=1&per_page=1000&time=1685723789845'],
+    ['Saponia', 'https://www.konzumshop.ba/v2/categories/5472087/products?filter%5Bshow%5D=all&filter%5Bsort_field%5D=soldStatistics&filter%5Bsort%5D=soldStatistics&page=1&per_page=1000&time=1685723815904'],
+    ['Saponia', 'https://www.konzumshop.ba/v2/categories/5471607/products?filter%5Bshow%5D=all&filter%5Bsort_field%5D=soldStatistics&filter%5Bsort%5D=soldStatistics&page=1&per_page=1000&time=1685723857930'],
 ]
 
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-    start_time = time.time()
+    start_time = time.perf_counter()
     products = []
     unique_codes = set()  # Set to store unique product codes
     
@@ -47,7 +47,7 @@ def main():
     # Inserting data
     insert_sql(products)
 
-    end_time = time.time()
+    end_time = time.perf_counter()
     elapsed_time = end_time - start_time
     print(f'Elapsed time: {int(elapsed_time)} seconds')
 

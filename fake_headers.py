@@ -1,5 +1,5 @@
 import requests
-import config_test
+import config
 
 import random
 
@@ -46,7 +46,7 @@ def fake_headers(url, indProxy, headers_str=None, indVerify=True):
         response = session.get(
         url='https://proxy.scrapeops.io/v1/',
         params={
-            'api_key': config_test.scrapeops_api_key,
+            'api_key': config.scrapeops_api_key,
             'url': url,
             'render_js': 'true', 
             'residential': 'true', 

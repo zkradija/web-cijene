@@ -31,7 +31,7 @@ def clean_chrome():
 
 if __name__ == '__main__':
     
-    start_time = time.time()
+    start_time = time.perf_counter()
     print(f'main.py started: {datetime.now().strftime("%H:%M:%S")}')
 
     clean_chrome()
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     srbija_maxi.main()
     srbija_univerexport.main()
 
-    end_time = time.time()
+    end_time = time.perf_counter()
     print(f'main.py ended: {datetime.now().strftime("%H:%M:%S")}')
     elapsed_time = end_time - start_time
     print(f'main.py elapsed time: {int(elapsed_time)} seconds')

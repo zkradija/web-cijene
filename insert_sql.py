@@ -1,14 +1,14 @@
 import sys
 import pyodbc as odbc
-import config_test
+import config
 
 # config contains sensitive data, hence it's hidden
 
 def insert_sql(result):
-    server = config_test.server
-    database = config_test.database
-    username = config_test.username
-    password = config_test.password
+    server = config.server
+    database = config.database
+    username = config.username
+    password = config.password
 
     conn_str =  f'DRIVER={{ODBC Driver 17 for SQL Server}};' \
                 f'SERVER={server};' \
@@ -24,7 +24,7 @@ def insert_sql(result):
             INSERT INTO Cijene 
             (WebMjestoId, TrgovinaId, datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        '''  # noqa: E501
+        '''
 
         for r in result:
             cursor.execute(insert_statement, r)

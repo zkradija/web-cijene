@@ -29,7 +29,7 @@ url = 'https://spiza.tommy.hr/shop-api/taxon-products/by-code/keksi'
 
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-    start_time = time.time()
+    start_time = time.perf_counter()
     products = []
     unique_codes = set ()
 
@@ -78,7 +78,7 @@ def main():
     # inserting data
     insert_sql(products)
 
-    end_time = time.time()
+    end_time = time.perf_counter()
     elapsed_time = end_time - start_time
     print(f'Elapsed time: {int(elapsed_time)} seconds')
 
