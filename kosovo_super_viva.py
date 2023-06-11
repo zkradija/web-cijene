@@ -6,57 +6,58 @@ from fake_headers import fake_headers
 from insert_sql import insert_sql
 
 
-kat =   [['Kandit','https://spv-online-api.tframe.team/customer/products/',
-            '4', '12'],
-        ['Kandit', 'https://spv-online-api.tframe.team/customer/products/',
-            '4', '15'],
-        ['Kandit', 'https://spv-online-api.tframe.team/customer/products/',
-            '4', '14'],
-        ['Saponia', 'https://spv-online-api.tframe.team/customer/products/',
-            '2', '34'],
-        ['Saponia', 'https://spv-online-api.tframe.team/customer/products/',
-            '2', '30'],
-        ['Saponia', 'https://spv-online-api.tframe.team/customer/products/',
-            '2', '36']]
+BASE_URL ='https://spv-online-api.tframe.team/customer/products/'
+
+CATEGORIES = [
+    ['Kandit','4', '12'],
+    ['Kandit', '4', '15'],
+    ['Kandit', '4', '14'],
+    ['Saponia', '2', '34'],
+    ['Saponia', '2', '30'],
+    ['Saponia', '2', '36']
+]
 
 # url = ?search&category=4&subcategory=12&page=1&sort=description
 
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-    result=[]
-    indProxy = 0
-    web_site = 18
-    trgovina = 28
-    date_str = str(date.today())
     start_time = time.time()
-    for k in kat:
-        print(k)
-        url_page_number = f'https://spv-online-api.tframe.team/customer/products/?search&category={k[2]}&subcategory={k[3]}&page=1&sort=description'
-        r = fake_headers(url_page_number, indProxy)
-        data = json.loads(r)
+    products = []
+    unique_codes = set()
+
+    for category in CATEGORIES:
+        print(category)
+        category_name, cat, sub_cat = category
+        url_page_number = f'{BASE_URL}?search&category={cat}&subcategory={sub_cat}&page=1&sort=description'
+        response = fake_headers(url_page_number, 0)
+        data = json.loads(response)
         page_number = int(data['total_pages'])
 
         for x in range (1,page_number+1):
-            url = f'https://spv-online-api.tframe.team/customer/products/?search&category={k[2]}&subcategory={k[3]}&page={x}&sort=description'
-            r = fake_headers(url, indProxy)
+            url = f'{BASE_URL}?search&category={cat}&subcategory={sub_cat}&page={x}&sort=description'
+            r = fake_headers(url, 0)
             data = json.loads(r)
 
-            for d in data['results']:
-                product=[]
-                product.append(web_site)
-                product.append(trgovina)
-                product.append(date_str)
-                product.append('https://www.super-viva.com/produkt/' + d['product_id'])
-                product.append(k[0])
-                product.append(d['product_id'])
-                product.append(d['description'])
-                product.append(float(d['price']))
-                result.append(product)
+            for product in data['results']:
+                code = product['product_id']
+                price = float(product['price'])
+                if code not in unique_codes and price > 0:
+                    products.append([    
+                        18, # website
+                        28, # store
+                        str(date.today()),
+                        'https://www.super-viva.com/produkt/' + product['product_id'],
+                        category_name,
+                        code,
+                        product['description'],  # name
+                        price
+                    ])
+                    unique_codes.add(code)
                 
             time.sleep(1)
     
     # inserting data
-    insert_sql(result)
+    insert_sql(products)
 
     end_time = time.time()
     elapsed_time = end_time - start_time

@@ -72,7 +72,7 @@ def main():
             dict_key = f'{d.get_attribute("href").split("/")[5]}{d.get_attribute("href").split("/")[6]}'
             if code not in unique_code:
                 product = [
-                    20, # web site
+                    20, # website
                     30, # store
                     str(date.today()),  # date
                     d.get_attribute('href'),    # product url

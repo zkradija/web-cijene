@@ -6,21 +6,20 @@ from bs4 import BeautifulSoup
 from fake_headers import fake_headers
 from insert_sql import insert_sql
 
-kat =   [['Sve','https://www.plodine.hr/akcije/42/tjedna-ponuda/top-brandovi'],
-        ['Sve','https://www.plodine.hr/akcije/79/tjedna-ponuda/izdvojeno']]
+CATEGORIES = [
+    ['Sve','https://www.plodine.hr/akcije/42/tjedna-ponuda/top-brandovi'],
+    ['Sve','https://www.plodine.hr/akcije/79/tjedna-ponuda/izdvojeno']
+]
 
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-    result = []
-    indProxy = 0
-    web_site = 15
-    store = 25
-    date_str = str(date.today())
+    products = []
     start_time = time.time()
 
-    for k in kat:
-        print(k)
-        web_page = fake_headers(k[1], indProxy)
+    for category in CATEGORIES:
+        print(category)
+        category_name, url = category
+        web_page = fake_headers(url, 0)
         soup = BeautifulSoup(web_page, 'html.parser')
 
         for div in soup.find_all('div', {'class': 'card__data'}):
@@ -28,13 +27,14 @@ def main():
             # some products doesn't have name -> skip them!
             if (div.find('p', {'class': 'regular'}) 
                     and div.find('div',{'class': 'card__heading'}).find('h2')):
-                product = []
-                product.append(web_site)
-                product.append(store)
-                product.append(date_str)
-                product.append('')  # no link
-                product.append(k[0])
-                product.append('')
+                product = [
+                    15, # website
+                    25, # store
+                    str(date.today()),
+                    '',  # no link
+                    category_name,
+                    '',     # no code
+                ]
                 brand = name = quantity = ''
                 if div.find('p',{'class': 'card__description'}):
                     brand = div.find('p',{'class': 'card__description'}).get_text()
@@ -46,18 +46,18 @@ def main():
                 if name.strip() == '':
                     break
                 product.append(name.strip())
-                product.append(
-                    float(
-                        div.find('p', {'class': 'regular'}).get_text()
+                product.append(float(div.find('p', {'class': 'regular'}).get_text()
                         .replace(' €','')
                         .replace(',','.')
                         .strip()
                         )
                 )
-                result.append(product)
+                price = product[7]
+                if price > 0:
+                    products.append(product)
     
     # inserting data
-    insert_sql(result)
+    insert_sql(products)
 
     end_time = time.time()
     elapsed_time = end_time - start_time

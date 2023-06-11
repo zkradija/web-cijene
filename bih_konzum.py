@@ -29,14 +29,13 @@ def main():
         for product in data['products']:
             code = product['code']
             price = float(product['price']['amount']) / 100
-            if code not in unique_codes and price > 0:
-                # Only add the product if its code is not already in the set
+            if code not in unique_codes and price > 0:      # Only add the product if its code is not already in the set
                 products.append([
-                    11,  # web_site
+                    11,  # website
                     21,  # store
-                    str(date.today()),  # date_str
+                    str(date.today()),
                     'https://www.konzumshop.ba' + product['product_path'],
-                    category_name,  # category_name
+                    category_name,
                     code,  # code
                     product['name'],  # name
                     price  # price

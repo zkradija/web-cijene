@@ -5,64 +5,68 @@ from datetime import date, datetime
 from fake_headers import fake_headers
 from insert_sql import insert_sql
 
+BASE_URL = 'https://trgovina.mercator.si'
+
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-    result = []
-    indProxy = 0
-    web_site = 2
-    store = 2
-    date_str = str(date.today())
     start_time = time.time()
-
+    products = []
+    unique_codes = set()
+    
     # Kandit
     for x in range (0,10):
         y = x * 100
-        url = f'https://trgovina.mercator.si/market/products/browseProducts/getProducts?limit=100&offset={x}&filterData%5Bcategories%5D=14535711&filterData%5Boffset%5D=8&from={y}&_=1684918912105'
+        url = f'{BASE_URL}/market/products/browseProducts/getProducts?limit=100&offset={x}&filterData%5Bcategories%5D=14535711&filterData%5Boffset%5D=8&from={y}&_=1684918912105'
         print(url)
-        r = fake_headers(url, indProxy)
-        data = json.loads(r)
-        for d in data:
-            product = []
-            if 'data' in d: 
-                product.append(web_site)
-                product.append(store)
-                product.append(date_str)
-                product.append('https://trgovina.mercator.si' + d['url']
-                               .replace('\\',''))
-                product.append('Kandit')
-                product.append(d['data']['code'])
-                product.append(d['data']['name'])
-                product.append(d['data']['current_price'])
-                result.append(product)
+        response = fake_headers(url, 0)
+        data = json.loads(response)
+        
+        for product in data:
+            code = product['data']['code']
+            price = float(product['data']['current_price'])
+            if code not in unique_codes and price > 0:      # Only add the product if its code is not already in the set
+                products.append([
+                    2,  # website
+                    2,  # store
+                    str(date.today()),  # date
+                    f'{BASE_URL}{product["url"]}'.replace('\\',''),
+                    'Kandit',
+                    code,
+                    product['data']['name'],
+                    price
+                    ])
+                unique_codes.add(code)
                 
         time.sleep(1)
 
     # Saponia
     for x in range (0,7):
         y = x * 100
-        url = f'https://trgovina.mercator.si/market/products/browseProducts/getProducts?limit=100&offset={x}&filterData%5Bcategories%5D=14535906&filterData%5Boffset%5D=6&from={y}&_=168493248856'
+        url = f'{BASE_URL}/market/products/browseProducts/getProducts?limit=100&offset={x}&filterData%5Bcategories%5D=14535906&filterData%5Boffset%5D=6&from={y}&_=168493248856'
         print(url)
-        r = fake_headers(url,indProxy)
-        data = json.loads(r)
+        response = fake_headers(url,0)
+        data = json.loads(response)
 
-        for d in data:
-            product = []
-            if 'data' in d: 
-                product.append(web_site)
-                product.append(store)
-                product.append(date_str)
-                product.append('https://trgovina.mercator.si' + d['url']
-                               .replace('\\',''))
-                product.append('Saponia')
-                product.append(d['data']['code'])
-                product.append(d['data']['name'])
-                product.append(d['data']['current_price'])
-                result.append(product)
+        for product in data:
+            code = product['data']['code']
+            price = float(product['data']['current_price'])
+            if code not in unique_codes and price > 0:      # Only add the product if its code is not already in the set
+                products.append([
+                    2,  # website
+                    2,  # store
+                    str(date.today()),  # date
+                    f'{BASE_URL}{product["url"]}'.replace('\\',''),
+                    'Saponia',
+                    code,
+                    product['data']['name'],
+                    price
+                    ])
+                unique_codes.add(code)
                 
         time.sleep(1)
 
     # inserting data
-    insert_sql(result)
+    insert_sql(products)
 
     end_time = time.time()
     elapsed_time = end_time - start_time

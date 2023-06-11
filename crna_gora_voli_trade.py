@@ -42,7 +42,7 @@ def main():
             if product_href.split('/')[-1] in unique_codes:     # check if code already exists
                 pass
             product = [
-                10,     # web site
+                10,     # website
                 20,     # store
                 str(date.today()),  # date
                 str(product_href),  # product url

@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from fake_headers import fake_headers
 from insert_sql import insert_sql
 
-kat =   [
+CATEGORIES =   [
         ['Kandit','https://www.ppkbjelovar.com/cokolade-i-kakao-ploce.aspx?size=all'],
         ['Kandit','https://www.ppkbjelovar.com/bomboni-lizalice-zvakace-gume.aspx?size=all'],
         ['Kandit','https://www.ppkbjelovar.com/bombonijere.aspx?size=all'],
@@ -26,45 +26,45 @@ kat =   [
 
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
-    result = []
-    indProxy = 0
-    web_site = 22
-    store = 32
-    date_str = str(date.today())
     start_time = time.time()
-    product_dict = {}
+    products = []
+    unique_codes = set()  # Set to store unique product codes
 
-    for k in kat:
-        print(k)
-        web_page = fake_headers(f'{k[1]}', indProxy,'')
+    for category in CATEGORIES:
+        print(category)
+        category_name, url = category
+        web_page = fake_headers(f'{url}', 0)
         soup = BeautifulSoup(web_page, 'html.parser')
+        
         for div in soup.find_all('div', {'class': 'article-item'}):
-            code = div.find('a', {'class': 'article-add-to-fav'}).attrs['onclick'].split(',')[1].strip()  # noqa: E501
-            if product_dict.get(code):
+            code = div.find('a', {'class': 'article-add-to-fav'}).attrs['onclick'].split(',')[1].strip()
+            if code in unique_codes:
                 pass
             else:
-                product = []
-                product.append(web_site)
-                product.append(store)
-                product.append(date_str)
-                product.append(f'https://www.ppkbjelovar.com{div.find("h2").find("a")["href"]}')
-                product.append(k[0])
-                product.append(code)
-                product.append(div.find('h2').find('a').get_text())
+                product = [
+                    12, # website
+                    32, # store
+                    str(date.today()),
+                    f'https://www.ppkbjelovar.com{div.find("h2").find("a")["href"]}',
+                    category_name,
+                    code,
+                    div.find('h2').find('a').get_text(),    # name
+                ]
                 prices_str = re.findall(
                     r'\d+,\d+', div.find('p', {'class': 'euro-price'}).get_text())
-                prices_float = [float(price.replace(',', '.')) 
-                               for price in prices_str 
-                               if float(price.replace(',', '.')) > 0]
+                prices_float = [float(price.replace(',', '.'))  
+                                for price in prices_str 
+                                if float(price.replace(',', '.')) > 0]
                 min_price = min(prices_float)
-                product.append(min_price)
-                result.append(product)
-                product_dict[product[5]] = 1
+                if min_price > 0:
+                    product.append(min_price)
+                    products.append(product)
+                    unique_codes.add(code)
         time.sleep(1)
                 
 
     # inserting data
-    insert_sql(result)
+    insert_sql(products)
 
     end_time = time.time()
     elapsed_time = end_time - start_time

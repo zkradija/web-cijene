@@ -42,7 +42,7 @@ def main():
                         pass
                     else:
                         product = [
-                            1,  # web site
+                            1,  # website
                             1,  # store
                             str(date.today()),  # date
                             f'https://konzum.hr{article.find("a", {"class": "link-to-product"})["href"]}',
