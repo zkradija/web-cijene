@@ -25,7 +25,8 @@ def main():
         
         for product in data['products']:
             code = product['dan']
-            if code not in unique_codes:
+            price = float(product['price']['value'])
+            if code not in unique_codes and price > 0:
             # Only add the product if its code is not already in the set
                 products.append([
                     17, # web_site
@@ -33,9 +34,9 @@ def main():
                     str(date.today()),  # date_str
                     'https://www.dm.hr' + product['relativeProductUrl'],
                     category_name,      # category_name
-                    product['dan'],     # code
+                    code,
                     product['name'],    # name
-                    float(product['price']['value'])    # price
+                    price
                 ])
                 unique_codes.add(code)
         

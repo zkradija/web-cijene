@@ -8,6 +8,7 @@ import hrvatska_dm
 import hrvatska_jadranka
 import hrvatska_kaufland
 import hrvatska_konzum
+import hrvatska_lidl
 import hrvatska_metro
 import hrvatska_njuskalo
 import hrvatska_plodine
@@ -42,6 +43,7 @@ if __name__ == '__main__':
     hrvatska_jadranka.main()
     hrvatska_kaufland.main()
     hrvatska_konzum.main()
+    hrvatska_lidl.main()
     hrvatska_metro.main()
     hrvatska_njuskalo.main()
     hrvatska_plodine.main()
