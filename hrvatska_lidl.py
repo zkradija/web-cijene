@@ -19,7 +19,7 @@ def main():
     time_sleep = 3
 
     options = webdriver.ChromeOptions()
-    #options.add_argument('--headless')
+    options.add_argument('--headless')
     driver = webdriver.Chrome(executable_path = r'./chromedriver', options=options)
 
     url = 'https://www.lidl.hr/letak'

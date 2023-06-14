@@ -62,7 +62,7 @@ def main():
             price = float(product['variants'][code]['price']['current']/100)
             if code not in unique_codes and price > 0:
                 products.append([
-                    19, # websiteA
+                    19, # website
                     29, # store
                     str(date.today()),  # date
                     f'https://www.tommy.hr/proizvodi/{product["slug"]}',  # product url

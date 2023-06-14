@@ -9,7 +9,6 @@ from insert_sql import insert_sql
 STORE_DICT = {
     'Boso': 10,
     'Interspar': 11,
-    'Lidl': 13,
     'NTL': 14,
     'SPAR': 16,
     'Studenac': 17}
