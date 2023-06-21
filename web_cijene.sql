@@ -9,7 +9,8 @@ go
 
 create table WebMjesto (
 WebMjestoId smallint primary key identity (1,1),
-Naziv varchar (50) 
+Naziv varchar (50),
+IndA tinyint default 1
 )
 
 create table Valuta (
@@ -37,6 +38,7 @@ create table Trgovina (
 TrgovinaId smallint primary key identity (1,1),
 Naziv varchar (50),
 DrzavaId smallint not null,
+IndA tinyint default 1,
 constraint FK_DrzavaId foreign key (DrzavaId) references Drzava(DrzavaId)
 )
 
@@ -46,14 +48,44 @@ create table Cijene (
 	WebMjestoId smallint not null,
 	TrgovinaId smallint not null,
 	Datum date not null,
-	Poveznica varchar(2048),
-	KategorijaId varchar (10) not null,
+	Poveznica varchar(512),
+	Kategorija varchar (10) not null,
 	Sifra varchar(100),
-	Naziv varchar (256),
+	Naziv varchar (256) not null,
 	Cijena decimal (10,2)
 	constraint FK_WebMjestoId foreign key (WebMjestoId) references WebMjesto(WebMjestoId),
 	constraint FK_TrgovinaId foreign key (TrgovinaId) references Trgovina(TrgovinaId)
 )
+
+
+create table GrupaMat (
+GrupaMatId int primary key identity (1,1),
+Sifra char(6) not null,
+Naziv varchar (100) not null
+)
+
+
+create table Proizvodi (
+ProizvodiId int primary key identity (1,1),
+Sifra char(20),
+Naziv varchar (256) not null,
+EanKom varchar (13),
+Status char (2),
+GrupaMatId int
+constraint FK_GrupaMatId foreign key (GrupaMatId) references GrupaMat(GrupaMatId)
+)
+
+create table WebProizvodi (
+WebProizvodiId int primary key identity (1,1),
+Sifra char(20),
+Naziv varchar (256) not null,
+ProizvodiId int,
+GrupaMatId int,
+constraint FK_Proizvodi_WebProizvodi foreign key (ProizvodiId) references Proizvodi(ProizvodiId)
+constraint FK_GrupaMatId foreign key (GrupaMatId) references GrupaMat(GrupaMatId)
+)
+
+
 
 
 insert into Valuta (Naziv,Naziv2,IsoAlpha3,Oznaka) values 

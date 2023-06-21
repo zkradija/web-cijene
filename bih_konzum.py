@@ -4,6 +4,7 @@ from datetime import date, datetime
 
 from fake_headers import fake_headers
 from insert_sql import insert_sql
+from insert_mysql_planetscale import insert_sql_planetscale
 
 
 CATEGORIES = [
@@ -45,7 +46,9 @@ def main():
         time.sleep(1)
 
     # Inserting data
+    insert_sql_planetscale(products)
     insert_sql(products)
+    
 
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
