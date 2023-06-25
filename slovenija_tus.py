@@ -26,16 +26,6 @@ CATEGORIES = [
     ['Saponia', 'Dom', 'Čistila', 'Čistila za steklo']
 ]
 
-web_category_name = 'Sladko in slano'
-subcategory_name =  'Sladki prigrizki'
-filter_pproperties_categories = 'Čokolade'
-
-
-web_category_name = 'Dom'
-filter_pproperties_categories = 'Mehalčci'
-subcategory_name =  'Pranje perila'
-
-
 def main():
     
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
@@ -68,7 +58,7 @@ def main():
             # _hjAbsoluteSessionInProgress=1; _ga=GA1.1.887435997.1687710911; _hjSessionUser_2790117=eyJpZCI6IjYxMjI3ZTY2LTM3MDgtNWZmZS1iMjUyLTJiNWY5NDU0NDgyOCIsImNyZWF0ZWQiOjE2ODc3MTA4OTc5NzgsImV4aXN0aW5nIjp0cnVlfQ==; 
             # _ga_01FGFBLMLX=GS1.1.1687710911.1.0.1687711473.0.0.0',
             'origin': 'https://hitrinakup.com',
-            'referer': 'https://hitrinakup.com/kategorije/Sladko%20in%20slano/Sladki%20prigrizki',
+            #'referer': 'https://hitrinakup.com/kategorije/Sladko%20in%20slano/Sladki%20prigrizki',
             'sec-ch-ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '"Windows"',
