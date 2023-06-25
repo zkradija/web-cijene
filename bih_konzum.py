@@ -4,7 +4,6 @@ from datetime import date, datetime
 
 from fake_headers import fake_headers
 from insert_sql import insert_sql
-from insert_mysql_planetscale import insert_sql_planetscale
 
 
 CATEGORIES = [
@@ -43,10 +42,9 @@ def main():
                 ])
                 unique_codes.add(code)
             
-        time.sleep(1)
+        time.sleep(2)
 
     # Inserting data
-    insert_sql_planetscale(products)
     insert_sql(products)
     
 

@@ -65,7 +65,7 @@ def main():
                 unique_codes.add(product[5])
                 products.append(product)
             
-        time.sleep(1)
+        time.sleep(2)
 
     
     # inserting data

@@ -60,7 +60,7 @@ def main():
                 pass
             else:
                 break
-            time.sleep(1)
+            time.sleep(2)
                 
 
     # inserting data

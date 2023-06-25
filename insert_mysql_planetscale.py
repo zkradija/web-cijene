@@ -23,14 +23,16 @@ def insert_sql_planetscale(result):
         insert_statement = '''
                 INSERT INTO Cijene 
                 (WebMjestoId, TrgovinaId, datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             '''
+
+        cursor.execute('INSERT INTO Cijene (WebMjestoId, TrgovinaId, datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) VALUES (1, 1, "2023-06-10", "", "", "123", "asc", 1.2)', r)
 
         for r in result:
             cursor.execute(insert_statement, r)
 
         print(f'{len(result)} records inserted successfully')
-
+        cursor.commit()
     except Error as e:
         print("Error while connecting to MySQL", e)
     finally:
