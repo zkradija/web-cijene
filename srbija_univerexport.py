@@ -43,7 +43,7 @@ def main():
                     div.find('div',{'class':'artikli_pojedinacan_naziv'}).get_text().strip(),   # name
                     float(div.find('div',{'class': 'artikli_pojedinacan_cena'}).get_text().replace('din/kom',''))
                 ]
-                price = product[7]            
+                price = product[6]            
                 if price > 0:
                     unique_codes.add(code)
                     products.append(product)

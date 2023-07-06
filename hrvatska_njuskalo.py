@@ -55,7 +55,7 @@ def main():
                                 float(div.find('p',{'class': 'newPrice'}).get_text().strip().split(' ')[0]  # price
                                     .replace(".","").replace(",","."))
                             ]
-                            price = product [7]
+                            price = product [6]
                             if price > 0:
                                 products.append(product)
                 else:

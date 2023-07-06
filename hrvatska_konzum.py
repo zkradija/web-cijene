@@ -53,9 +53,9 @@ def main():
                                 .replace('.', '')
                                 .replace(',', '.'))
                         ]
-                        price = product[7]
+                        price = product[6]
                         if price > 0:  # Check if price > 0
-                            unique_codes.add(product[5])
+                            unique_codes.add(product[4])
                             products.append(product)
             else:
                 break

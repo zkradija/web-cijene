@@ -56,7 +56,7 @@ def main():
                                 name,
                                 float(price_str[0].get_text().strip().replace('-','0').replace('.','').replace(',','.'))
                             ]
-                            if product[7] > 0:    
+                            if product[6] > 0:    
                                 unique_codes.add(code)
                                 products.append(product)
                             
@@ -71,7 +71,7 @@ def main():
                                 name,
                                 float(price_str[1].get_text().strip().replace('-','0').replace('.','').replace(',','.'))
                             ]
-                            if product[7] > 0:    
+                            if product[6] > 0:    
                                 unique_codes.add(code)
                                 products.append(product)
                             
@@ -103,7 +103,7 @@ def main():
                                 name,
                                 float(price_str[3].get_text().strip().replace('-','0').replace('.','').replace(',','.'))
                             ]
-                            if product[7] > 0:    
+                            if product[6] > 0:    
                                 unique_codes.add(code)
                                 products.append(product)
                             
@@ -119,7 +119,7 @@ def main():
                                 name,
                                 float(price_str[4].get_text().strip().replace('-','0').replace('.','').replace(',','.'))
                             ]
-                            if product[7] > 0:    
+                            if product[6] > 0:    
                                 unique_codes.add(code)
                                 products.append(product)
                             
@@ -135,7 +135,7 @@ def main():
                                 name,
                                 float(price_str[5].get_text().strip().replace('-','0').replace('.','').replace(',','.'))
                             ]
-                            if product[7] > 0:    
+                            if product[6] > 0:    
                                 unique_codes.add(code)
                                 products.append(product)
                             
@@ -153,7 +153,7 @@ def main():
                                     name,
                                     float(price_str[6].get_text().strip().replace('-','0').replace('.','').replace(',','.'))
                                 ]
-                            if product[7] > 0:    
+                            if product[6] > 0:    
                                 unique_codes.add(code)
                                 products.append(product)
                         

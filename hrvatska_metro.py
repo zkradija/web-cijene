@@ -80,7 +80,7 @@ def main():
                     d.get_attribute('description'),  # name
                     float(prices_dict[dict_key])
                 ]
-                price = product[7]
+                price = product[6]
                 if price > 0:  # Check if price > 0
                     unique_code.add(code)
                     products.append(product)

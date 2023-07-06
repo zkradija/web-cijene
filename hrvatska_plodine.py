@@ -51,7 +51,7 @@ def main():
                         .strip()
                         )
                 )
-                price = product[7]
+                price = product[6]
                 if price > 0:
                     products.append(product)
     
