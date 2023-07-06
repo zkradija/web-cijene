@@ -100,21 +100,21 @@ def main():
 
         data = response.json()
 
-        for product in data['data']['getItemsForSelectedSubCategory']['items']:
-            code = product['id']
-            price = float(product['price'])
-            if code not in unique_codes and price > 0:      # Only add the product if its code is not already in the set
-                products.append ([
-                    9,  # website
-                    19,  # store
-                    str(date.today()),
-                    f'https://hitrinakup.com/izdelki/{code}/{product["displayName"]}',
-                    category_name,
-                    code,  # code
-                    product['name'],  # name
-                    price  # price
-                ])
-                unique_codes.add(code)        
+        if data['data']['getItemsForSelectedSubCategory']:
+            for product in data['data']['getItemsForSelectedSubCategory']['items']:
+                code = product['id']
+                price = float(product['price'])
+                if code not in unique_codes and price > 0:      # Only add the product if its code is not already in the set
+                    products.append ([
+                        19,  # store
+                        str(date.today()),
+                        f'https://hitrinakup.com/izdelki/{code}/{product["displayName"]}',
+                        category_name,
+                        code,  # code
+                        product['name'],  # name
+                        price  # price
+                    ])
+                    unique_codes.add(code)        
         time.sleep(1)
 
     # inserting data

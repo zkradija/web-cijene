@@ -31,7 +31,6 @@ def main():
             price = float(product['price']['amount']) / 100
             if code not in unique_codes and price > 0:      # Only add the product if its code is not already in the set
                 products.append([
-                    11,  # website
                     21,  # store
                     str(date.today()),
                     'https://www.konzumshop.ba' + product['product_path'],

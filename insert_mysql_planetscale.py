@@ -22,11 +22,11 @@ def insert_sql_planetscale(result):
             cursor = connection.cursor()
         insert_statement = '''
                 INSERT INTO Cijene 
-                (WebMjestoId, TrgovinaId, datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                (TrgovinaId, datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
             '''
 
-        cursor.execute('INSERT INTO Cijene (WebMjestoId, TrgovinaId, datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) VALUES (1, 1, "2023-06-10", "", "", "123", "asc", 1.2)', r)
+        cursor.execute('INSERT INTO Cijene (TrgovinaId, datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) VALUES (1, 1, "2023-06-10", "", "", "123", "asc", 1.2)', r)
 
         for r in result:
             cursor.execute(insert_statement, r)

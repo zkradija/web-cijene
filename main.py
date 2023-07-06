@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     
     try:
-        clean_chrome()
+        #clean_chrome()
         
         bih_konzum.main()
         crna_gora_voli_trade.main()

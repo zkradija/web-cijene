@@ -28,7 +28,6 @@ def main():
             if (div.find('p', {'class': 'regular'}) 
                     and div.find('div',{'class': 'card__heading'}).find('h2')):
                 product = [
-                    15, # website
                     25, # store
                     str(date.today()),
                     '',  # no link

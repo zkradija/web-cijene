@@ -7,12 +7,6 @@ go
 use WebCijene
 go
 
-create table WebMjesto (
-WebMjestoId smallint primary key identity (1,1),
-Naziv varchar (50),
-IndA tinyint default 1
-)
-
 create table Valuta (
 ValutaId smallint primary key identity (1,1),
 Naziv varchar(40) not null,
@@ -45,7 +39,6 @@ constraint FK_DrzavaId foreign key (DrzavaId) references Drzava(DrzavaId)
 
 create table Cijene (
 	CijeneId int identity (1,1) primary key,
-	WebMjestoId smallint not null,
 	TrgovinaId smallint not null,
 	Datum date not null,
 	Poveznica varchar(512),
@@ -276,21 +269,6 @@ insert into Drzava (Naziv,NazivEng,IsoAlpha2,IsoAlpha3,Oznaka,ValutaId,IndEu) va
 	('Srbija ','Serbia ','RS','SRB','688',128,0),
 	('�panjolska','Spain','ES','ESP','724',5,1),
 	('�vedska','Sweden','SE','SWE','752',134,1)
-
-insert into WebMjesto values 
-	('www.konzum.hr'), 
-	('trgovina.mercator.si'), 
-	('cenoteka.rs'),
-	('online.idea.rs'), 
-	('maxi.rs'), 
-	('elakolije.rs'), 
-	('popusti.njuskalo.hr'), 
-	('spar.si'), 
-	('hitrinakup.com'), 
-	('voli.me'), 
-	('konzumshop.ba'), 
-	('marketonline.mk') 
-
 
 
 insert into Trgovina (Naziv,DrzavaId) values 

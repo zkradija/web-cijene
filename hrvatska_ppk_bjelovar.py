@@ -42,7 +42,6 @@ def main():
                 pass
             else:
                 product = [
-                    22, # website
                     32, # store
                     str(date.today()),
                     f'https://www.ppkbjelovar.com{div.find("h2").find("a")["href"]}',

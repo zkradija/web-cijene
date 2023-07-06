@@ -35,7 +35,6 @@ def main():
                 pass
             latin_name = cyrtranslit.to_latin(div.find('h3', {'class': 'wd-entities-title'}).get_text(), 'mk')
             product = [
-                12,     # website
                 22,     # store
                 str(date.today()),
                 div.find('a')['href'],

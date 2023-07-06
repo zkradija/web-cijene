@@ -44,7 +44,6 @@ def main():
             price = float(product['price']['amount']/100)
             if code not in unique_codes and price > 0:
                 products.append([
-                    4,      # website
                     3,      # store
                     str(date.today()),  # date
                     f'https://online.idea.rs/#!{product["product_path"]}',

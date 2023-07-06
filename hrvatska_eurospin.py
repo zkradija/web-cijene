@@ -41,7 +41,6 @@ def main():
                     code = div.find('figure')['src'].split('/')[-1].replace('.jpg','')
                     if code not in unique_codes:     # check if code already exists
                         product = [
-                            16,     # web_site
                             26,     # store
                             str(date.today()),  # date_str
                             div.find('figure')['src'],

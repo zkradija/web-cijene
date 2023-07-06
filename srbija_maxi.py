@@ -40,7 +40,6 @@ def main():
                               .replace('.','').replace(',','.'))
                 if code not in unique_codes and price > 0:
                     products.append([
-                        5,  # website
                         4,  # store
                         str(date.today()),
                         f'https://maxi.rs{product["url"]}',

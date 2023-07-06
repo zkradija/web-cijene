@@ -46,7 +46,6 @@ def main():
                         # don't need %, just usual numeric price
                         if div.find('p',{'class': 'newPrice'}):
                             product = [
-                                7,  # website
                                 STORE_DICT[t],  # store
                                 str(date.today()),  # date
                                 f'https://popusti.njuskalo.hr{div.find("a")["href"]}',

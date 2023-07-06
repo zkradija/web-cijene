@@ -48,7 +48,6 @@ def main():
                         if code not in unique_codes:
                             #IDEA
                             product = [
-                                3,      # website
                                 3,      # store
                                 str(date.today()),  # date
                                 product_url,
@@ -64,7 +63,6 @@ def main():
                             
                             #Maxi
                             product = [
-                                3,      # website
                                 4,      # store
                                 str(date.today()),  # date
                                 product_url,
@@ -79,26 +77,24 @@ def main():
                             
 
 
-                            #Univerexport
-                            product = [
-                                3,      # website
-                                5,      # store
-                                str(date.today()),  # date
-                                product_url,
-                                category_name,
-                                code,
-                                name,
-                                float(price_str[2].get_text().strip().replace('-','0').replace('.','').replace(',','.'))
-                            ]
-                            if product[7] > 0:    
-                                unique_codes.add(code)
-                                products.append(product)
+                            # #Univerexport
+                            # product = [
+                            #     5,      # store
+                            #     str(date.today()),  # date
+                            #     product_url,
+                            #     category_name,
+                            #     code,
+                            #     name,
+                            #     float(price_str[2].get_text().strip().replace('-','0').replace('.','').replace(',','.'))
+                            # ]
+                            # if product[7] > 0:    
+                            #     unique_codes.add(code)
+                            #     products.append(product)
                             
 
 
                             #Tempo
                             product = [
-                                3,      # website
                                 6,      # store
                                 str(date.today()),  # date
                                 product_url,
@@ -115,7 +111,6 @@ def main():
 
                             #DIS Rakovica
                             product = [
-                                3,      # website
                                 7,      # store
                                 str(date.today()),  # date
                                 product_url,
@@ -132,7 +127,6 @@ def main():
 
                             #Roda
                             product = [
-                                3,      # website
                                 8,      # store
                                 str(date.today()),  # date
                                 product_url,
@@ -151,7 +145,6 @@ def main():
                             #Lidl - ubacujem provjeru je li postoji zadnji stupac - trgovina Lidl
                             if len(d.find_all('div', {'class' : ['price', 'price p-0', 'price lowest p-0', 'price akcija star-top p-0']})) > 6:
                                 product = [
-                                    3,      # website
                                     9,      # store
                                     str(date.today()),  # date
                                     product_url,

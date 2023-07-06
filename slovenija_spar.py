@@ -30,7 +30,6 @@ def main():
             code = product['id']
             price = float(product['masterValues']['best-price'])
             products.append([
-                8,      # website
                 18,     # store
                 str(date.today()),
                 f'www.spar.si/online{product["masterValues"]["url"]}',

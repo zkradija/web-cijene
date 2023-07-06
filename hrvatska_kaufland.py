@@ -32,7 +32,6 @@ def main():
             if (div.find('div', {'class': 'a-pricetag__price'}) and div.find('div',{'class': 'm-offer-tile__text'}).find('h5') 
                 and code not in unique_codes):
                 product = [
-                    13,     # website
                     23,     # store
                     str(date.today()),      # date
                     f'https://www.kaufland.hr{product_href}',   # product url

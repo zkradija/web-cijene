@@ -56,7 +56,6 @@ def main():
             if code not in unique_codes and price > 0:
             # Only add the product if its code is not already in the set
                 products.append([
-                    23, # web_site
                     13, # store
                     str(date.today()),  # date_str
                     product['url'].split('?')[0],

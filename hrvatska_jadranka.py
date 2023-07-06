@@ -38,7 +38,6 @@ def main():
                     pass
                 else:
                     product = [
-                        21,
                         31,
                         str(date.today()),
                         div.find('a')['href'],

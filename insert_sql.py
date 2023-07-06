@@ -22,8 +22,8 @@ def insert_sql(result):
 
         insert_statement = '''
             INSERT INTO Cijene 
-            (WebMjestoId, TrgovinaId, datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            (TrgovinaId, Datum, Poveznica, Kategorija, Sifra, Naziv, Cijena) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         '''
 
         for r in result:

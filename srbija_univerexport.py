@@ -18,7 +18,6 @@ CATEGORIES = [
     ['Saponia','https://elakolije.rs/b000525/polica/za-odrzavanje-domacinstva']
 ]
 
-
 def main():
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     start_time = time.perf_counter()
@@ -36,7 +35,6 @@ def main():
             code = product_url.split('/')[3]
             if code not in unique_codes:
                 product = [
-                    6,  # website
                     5,  # store
                     str(date.today()),  # date
                     product_url,

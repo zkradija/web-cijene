@@ -26,7 +26,6 @@ def main():
             price = float(product['data']['current_price'])
             if code not in unique_codes and price > 0:      # Only add the product if its code is not already in the set
                 products.append([
-                    2,  # website
                     2,  # store
                     str(date.today()),  # date
                     f'{BASE_URL}{product["url"]}'.replace('\\',''),
@@ -52,7 +51,6 @@ def main():
             price = float(product['data']['current_price'])
             if code not in unique_codes and price > 0:      # Only add the product if its code is not already in the set
                 products.append([
-                    2,  # website
                     2,  # store
                     str(date.today()),  # date
                     f'{BASE_URL}{product["url"]}'.replace('\\',''),

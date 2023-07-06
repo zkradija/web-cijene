@@ -43,7 +43,6 @@ def main():
                 price = float(product['price'])
                 if code not in unique_codes and price > 0:
                     products.append([    
-                        18, # website
                         28, # store
                         str(date.today()),
                         'https://www.super-viva.com/produkt/' + product['product_id'],
