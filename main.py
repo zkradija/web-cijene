@@ -24,7 +24,7 @@ import srbija_maxi
 import srbija_univerexport
 
 
-# removing all chrome instances
+# removing all chrome instances, not used atm
 def clean_chrome():
     os.system('taskkill /im chrome.exe /f')
     os.system('taskkill /im chromedriver.exe /f')
@@ -37,8 +37,6 @@ if __name__ == '__main__':
 
     
     try:
-        #clean_chrome()
-        
         bih_konzum.main()
         crna_gora_voli_trade.main()
         hrvatska_dm.main()

@@ -46,39 +46,8 @@ create table Cijene (
 	Sifra varchar(100),
 	Naziv varchar (256) not null,
 	Cijena decimal (10,2)
-	constraint FK_WebMjestoId foreign key (WebMjestoId) references WebMjesto(WebMjestoId),
 	constraint FK_TrgovinaId foreign key (TrgovinaId) references Trgovina(TrgovinaId)
 )
-
-
-create table GrupaMat (
-GrupaMatId int primary key identity (1,1),
-Sifra char(6) not null,
-Naziv varchar (100) not null
-)
-
-
-create table Proizvodi (
-ProizvodiId int primary key identity (1,1),
-Sifra char(20),
-Naziv varchar (256) not null,
-EanKom varchar (13),
-Status char (2),
-GrupaMatId int
-constraint FK_GrupaMatId foreign key (GrupaMatId) references GrupaMat(GrupaMatId)
-)
-
-create table WebProizvodi (
-WebProizvodiId int primary key identity (1,1),
-Sifra char(20),
-Naziv varchar (256) not null,
-ProizvodiId int,
-GrupaMatId int,
-constraint FK_Proizvodi_WebProizvodi foreign key (ProizvodiId) references Proizvodi(ProizvodiId)
-constraint FK_GrupaMatId foreign key (GrupaMatId) references GrupaMat(GrupaMatId)
-)
-
-
 
 
 insert into Valuta (Naziv,Naziv2,IsoAlpha3,Oznaka) values 
