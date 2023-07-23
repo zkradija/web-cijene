@@ -18,7 +18,7 @@ from insert_sql import insert_sql
 def main():
     chromedriver_autoinstaller.install()
     # Pass in the folder used for storing/downloading chromedriver
-    check_driver('D:/Git/web-cijene/venv/Lib/site-packages/chromedriver_autoinstaller/')
+    check_driver('./chromedriver_autoinstaller/')
 
     print(f'{__file__} : {datetime.now().strftime("%H:%M:%S")}')
     start_time = time.perf_counter()
