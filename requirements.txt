@@ -3,3 +3,4 @@ cyrtranslit==1.1.1
 pyodbc==4.0.35
 Requests==2.31.0
 selenium==4.9.1
+# install: Microsoft ODBC Driver 17.10.4.1
